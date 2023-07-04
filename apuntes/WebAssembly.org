@@ -1,0 +1,19 @@
+#+TITLE: Apuntes sobre Web Assembly
+#+AUTHOR: José Luis de la Hoz García
+
+¿Qué es WebAssembly?
+
+Un formato binario de bajo nivel para la web, que es compilado desde otros lenguajes, para ofrecer un rendimiento maximizado. Se trata de un formato de instrucción binario diseñado espefícicamente para implementar una máquina virtual basada en pila.
+
+WebAssembly puede ser vista como una "Java Virtual Machine", donde los lenguajes de la plataforma producen un bytecode interpretable por dicha máquina virtual y esta ejecuta el código. Existen muchos lenguajes compatibles con la máquina virtual java: Kotlin, Scala, Clojure, Jython, JRuby, o el mismo Java.
+
+Realmente cualquier lenguaje puede ser compatible con la máquina virtual java mientras este pueda producir bytecodes.
+
+De la misma forma, WebAssembly podría ejecutar código de cualquier lenguaje si este puede producir el formato de instrucción binario de la máquina virtual WebAssembly. Y ya es el caso de los siguientes lenguajes: C, C++, Rust, Go, Swift, C#, etc.
+
+El lenguaje actúa como un estándar (muchas veces lo es) y la implementación de ese estándar es el programa destino del código, ya sea un compilador o intérprete.
+
+¿Por qué no usar la máquina virtual java?
+¿WebAssembly desplazará a JavaScript?
+¿Qué rendimiento se espera de WebAssembly?
+¿Existe web apps implementadas en WebAssembly?
