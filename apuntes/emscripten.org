@@ -1,0 +1,9 @@
+#+TITLE: Apuntes sobre emscripten
+#+AUTHOR: José Luis de la Hoz García
+
+* [[https://emscripten.org/docs/optimizing/Optimizing-Code.html#optimizing-code][Optimización de código wasm]]
+Existen distintos flags en emscripten para indicar niveles de optimización.
+A tener en cuenta al desarrollar pruebas finales.
+
+* [[https://developer.mozilla.org/en-US/docs/WebAssembly/C_to_wasm#calling_a_custom_function_defined_in_c][Llamada a función]]
+
