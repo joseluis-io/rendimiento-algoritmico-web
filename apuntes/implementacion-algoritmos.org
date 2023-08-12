@@ -1,0 +1,19 @@
+#+TITLE: Implementación de los algoritmos
+#+SUBTITLE: Explicación de las implementaciones aplicadas.
+#+AUTHOR: José Luis de la Hoz García
+#+DATE: <2023-08-12 Sat>
+
+* Fibonnacci recursivo
+Implementación del algoritmo Fibonnacci recursivo en los lenguajes C++, JS y código WebAssembly. Todas las implementaciones parten del mismo pseudocódigo.
+
+* Cola
+C++ y JS cuentan con una librería estándar para la gestión de las estructuras de datos FIFO, comúnmente conocidas como colas. Escogiendo estas implementaciones se utilizarán las colas tal y como probablemente se utilicen en casos prácticos.
+
+Por otra parte la comparativa no resultaría estándarizada ya que cada compilador C++ cuenta con su propia implementación de la librería estándar (aunque sería necesario un compilador compatible con LLVM, para poder utilizar Emscripten, y solo lo cumple clang), así como cada motor javascript de cada navegador web (V8, de Chrome; SpiderMonkey, de Firefox; JavaScriptCore, de Safari; y Chakra, del antiguo Edge). Por tanto debido a las características de WebAssembly y Emscripten, el único compilador C++ apto sería clang. Sin embargo, por lo anteriormente comentado existirían diversos motores javascript que tendrían que ejecutar los algoritmos propuestos.
+
+Realmente lo anterior aplicaría para todos los algoritmos evaluados, la diferencia es que la cola cuenta con una librería estandarizada y el resto no, por tanto lo correcto sería evaluar de dos formas el algoritmo:
+
+1. Usando la librería estándar.
+2. Implementar una estructura de datos a partir del mismo pseudocódigo.
+
+De esta forma podremos valorar las diferencias de optimización de los motores javascript. Otro punto que se deduce para el análisis de los algoritmos es que debemos realizar el análisis en los distintos navegadores que soporten WebAssembly (o al menos los que no compartan entre sí motor JavaScript: navegadores basados en Chromium, Firefox y Safari).
