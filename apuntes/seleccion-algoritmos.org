@@ -1,0 +1,74 @@
+#+title: Seleccion Algoritmos
+
+* Enunciado
+Escoger un conjunto de algoritmos para utilizar en el trabajo de fin de grado. Enfocarse en algoritmos de búsqueda y ordenación a ser posible. Los algoritmos deben comprender las siguientes complejidades: O(1), O(n), O(2n), O(n^2), O(2^n) y O(log n).
+
+* Distintas notaciones
+Matemáticamente las diferentes notaciones son definidas de la siguiente manera:
+- Worst-case or upper bound: Big-O: O(n)
+- Best-case or lower bound: Big-Omega: Ω(n)
+- Average-case: Big-Theta: Θ(n)
+- Non-tight upper bound: o(n)
+- Non-tight lower bound: ω(n)
+
+* Oblivious algorithm (algoritmo inadvertido)
+Término aplicado a los algoritmos cuya complejidad es independiente de la entrada de datos. Por tanto, el caso mejor, medio y peor son el mismo.
+
+* Algoritmo voraz
+Un algoritmo voraz es una estrategia de búsqueda por la cuál se sigue una heurística consistente en elegir la opción óptima en cada paso con la esperanza de alcanzar una solución óptima.
+
+* Propuesta de algoritmos
+Los algoritmos tienen complejidad temporal y espacial. Además, según el grado de la complejidad temporal podrán comportarse algorítmicamente de distinta manera; por ejemplo, la búsqueda binaria en el caso medio y mejor serán O(log n), mientras que en el peor caso será O(n).
+
+Debido a lo anterior seleccionaré un conjunto de algoritmos que comprendan las distintas complejidades propuestas enfocándome en el campo temporal. Las complejidades temporales de algunos algoritmos se solaparán entre sí, pero el objetivo final es que todas las complejidades propuestas sean analizadas.
+
+* Órdenes de complejidad:
+1. Orden constante: O(1)
+2. Orden logarítmico: O(log n)
+3. Orden lineal: O(n)
+4. Orden n log n: O(n log n)
+5. Orden cuadrático: O(n²)
+6. Orden cúbico: O(n³)
+7. Orden polinómico: O(n^k)
+8. Orden exponencial: O(2^n)
+9. Orden factorial: O(n!)
+
+Incluir un gráfico.
+
+* Complejidades temporales de algoritmos a evaluar:
+** O(1)
+- Acceder al indice de un array.
+- Insertar/eliminar un nodo de una cola.
+- Apilar o desapilar una pila.
+** O(n)
+*** Búsqueda linear
+- O(n)
+- Θ(log n)
+- Ω(1)
+** O(2n)
+2n al igual que n tiene un crecimiento lineal.
+Por tanto sería aplicar búsqueda linear con el doble de entrada.
+** O(n^2)
+*** Quicksort
+- O(n^2)
+- Θ(n * log n)
+- Ω(n * log n)
+*** Algoritmo de burbuja
+- O(n^2)
+- Θ(n^2)
+- Ω(n)
+** O(2^n)
+*** Fibonacci Recursivo
+- O(2^n)
+- Θ(2^n)
+- Ω(1)
+** O(log n)
+*** Búsqueda binaria
+- O(log n)
+- average O(log n)
+- best O(1)
+  
+* Bibliografía
+https://devopedia.org/algorithmic-complexity
+Tema 2: Análisis de complejidad. Estructura de datos y algoritmos.
+https://es.wikipedia.org/wiki/%C3%81rbol_AVL
