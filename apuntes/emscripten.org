@@ -1,6 +1,12 @@
 #+TITLE: Apuntes sobre emscripten
 #+AUTHOR: José Luis de la Hoz García
 
+Compila código C/C++, o cualquier lenguaje compatible con LLVM, a binario WebAssembly. Este binario podrá ejecutarse en navegadores compatibles, Node.js u otros entornos de ejecución wasm.
+
+La principal herramienta de emscripten es su compilador frontend: Emscripten Compiler Frontend o "emcc". Emcc crea una representación intermedia del código fuente y sustituirá los compiladores estándar como clang o cgg.
+
+Emscripten cuenta con su propia tecnología de [[https://emscripten.org/docs/getting_started/test-suite.html#benchmarking][benchmarking]] para medir velocidad y tamaño del código
+
 * [[https://emscripten.org/docs/optimizing/Optimizing-Code.html#optimizing-code][Optimización de código wasm]]
 Existen distintos flags en emscripten para indicar niveles de optimización.
 A tener en cuenta al desarrollar pruebas finales.

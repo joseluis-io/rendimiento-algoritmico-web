@@ -13,7 +13,10 @@ Por otra parte la comparativa no resultaría estándarizada ya que cada compilad
 
 Realmente lo anterior aplicaría para todos los algoritmos evaluados, la diferencia es que la cola cuenta con una librería estandarizada y el resto no, por tanto lo correcto sería evaluar de dos formas el algoritmo:
 
-1. Usando la librería estándar.
-2. Implementar una estructura de datos a partir del mismo pseudocódigo.
+1. Usando la librería estándar C++ y JS
+   En términos algorítmicos la comparación será injusta porque la librería estándar de javascript de "Array" realmente es un "array-like object" que utiliza un buffer de memoria y puede incluir cualquier tipo de dato. De todas formas los motores javascript cuentan con complejas optimizaciones para mejorar el rendimiento de las estructuras de datos estándar.
+2. Implementar en javascript una estructura de datos similar a la cola estándar de C++ usando [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Typed_arrays]["JavaScript typed arrays"]]. Estos arrays son distintos a los Arrays: 
 
 De esta forma podremos valorar las diferencias de optimización de los motores javascript. Otro punto que se deduce para el análisis de los algoritmos es que debemos realizar el análisis en los distintos navegadores que soporten WebAssembly (o al menos los que no compartan entre sí motor JavaScript: navegadores basados en Chromium, Firefox y Safari).
+
+** 
