@@ -1,31 +1,9 @@
-<!doctype html>
 <html>
-  <head>
-    
-  </head>
   <body>
-    <h1>Hello, World!</h1>
-    <div>
-      <h2>Fibonnaci recursivo</h2>
-      <div>
-	<input type="number" name="fib" id="fib"/>
-	<button id="fibButton">Calcular</button>
-      </div>
-    </div>
+    <script src="algorithm.js"></script>
     <script src="fib.js"></script>
-    <script src="artifacts/fib.js"></script>
-    <script src="artifacts/fib.wasm"></script>
     <script>
-      const fibButton = document.getElementById("fibButton");
-      fibButton.addEventListener("click", (event) => {
-	  let fibValue = document.getElementById("fib").value;
-	  console.log(fib(fibValue));
-	  // TODO: wasm execution
-	  const wasm = Module.ccall();
-	  // TODO: promises for three calculations
-	  // TODO: add a row in a HTML table with data of each execution
-	  // TODO: when clicked button, disable button until calculation is finished and set cursor to wait state. 
-      });
+      fib_c = Module.cwrap('fib', 'number', ['number']);
     </script>
   </body>
 </html>
