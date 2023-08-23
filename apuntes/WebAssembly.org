@@ -1,7 +1,7 @@
 #+TITLE: Apuntes sobre Web Assembly
 #+AUTHOR: José Luis de la Hoz García
 
-¿Qué es WebAssembly?
+* ¿Qué es WebAssembly?
 
 Un formato binario de bajo nivel para la web, que es compilado desde otros lenguajes, para ofrecer un rendimiento maximizado. Se trata de un formato de instrucción binario diseñado espefícicamente para implementar una máquina virtual basada en pila.
 
@@ -13,7 +13,40 @@ De la misma forma, WebAssembly podría ejecutar código de cualquier lenguaje si
 
 El lenguaje actúa como un estándar (muchas veces lo es) y la implementación de ese estándar es el programa destino del código, ya sea un compilador o intérprete.
 
+* WebAssembly JS API
+
+- Un módulo WebAssembly puede tener N instancias.
+- Un módulo puede usar 0-1 instancias de memoria.
+- Un módulo puede usar 0-1 instancias de tablas.
+- Una instancia de memoria o tabla puede ser usada por 0-N instancias de módulo. Estas instancias compartirán la misma dirección de espacio.
+
+  En futuras versiones de WebAssembly se espera poder disponer de 0-N instancias de memoria y tablas en una instancia de módulo.
+
+** Modelo de memoria
+
+La memoria es un rango contiguo de bytes sin tipo llamado "memoria lineal". Las operaciones de lectura y escritura están disponibles dentro de un módulo a través de las instrucciones "load" y "store".
+
+A diferencia de un programa C, en el cual toda la memoria disponible está asignada al proceso entero, en WebAssembly la memoria es accesible solo para una instancia, mucho más reducida y contenida en un objeto de memoria WebAssembly. La ventaja de este enfoque radica en poder disponer de muchas librerías independientes que cuenten con memorias separadas y completamente aisladas.
+
+Para la creación de de un objeto de memoria independiente se utiliza la interfaz WebAssembly.Memory(). El primer parámetro indica el número inicial de páginas y el segundo parámetro opcional el máximo disponible. Una página de memoria es el equivalente a 64KiB.
+
+La memoria se puede ampliar usando el método Memory.prototype.grow(). Como parámetro se indica el número de páginas que se quiere incrementar la memoria. Si la memoria cuenta con un máximo disponible entonces podrá ampliarse la memoria hasta ese límite, y si es superado se producirá una excepción "RangeError".
+
+Cada vez que se amplia la memoria con el método "grow" las referencias de las variables se desasignan; para recuperar el acceso a la memoria se tendrá que reasignar la variable a la memoria, de esta forma obtendremos la memoria ampliada y con sus valores previos. Esto se debe a que el tamaño del "ArrayBuffer" es inmutable y después del método "grow" se retorna un nuevo ArrayBuffer con el tamaño incrementado y la antigua referencia de memoria a la que previamente apuntaba es desconectada.
+
+** Tablas
+
+Las tablas son un array dinámico y limitado exclusivamente a referencias. Por el momento el único tipo de referencia disponible es el de las funciones. El código JavaScript y WebAssembly puede acceder a dichas referencias.
+
+Es necesaria esta estructura para disponer de funciones puntero. Como la función puntero es representada por la dirección de memoria, esta no puede ser almacenada directamente en memoria lineal. Por tanto, las referencias son almacenadas en la tabla y se acceden a estas con un número entero, el cual es el índice de la función puntero.   
+
+** Variables globales
+
+WebAssembly cuenta con la habilidad de crear variables globales accesibles en JavaScript e importables/exportables a través de una o más instancias de módulos WebAssembly. Para ello se utiliza el constructor: WebAssembly.Global().
+
+* Preguntas frecuentes
 ¿Por qué no usar la máquina virtual java?
+¿WebAssembly es un estándar? ¿Cuál es su soporte?
 ¿WebAssembly desplazará a JavaScript?
 ¿Qué rendimiento se espera de WebAssembly?
 ¿Existe web apps implementadas en WebAssembly?

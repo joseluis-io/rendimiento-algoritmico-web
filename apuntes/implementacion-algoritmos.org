@@ -19,4 +19,7 @@ Realmente lo anterior aplicaría para todos los algoritmos evaluados, la diferen
 
 De esta forma podremos valorar las diferencias de optimización de los motores javascript. Otro punto que se deduce para el análisis de los algoritmos es que debemos realizar el análisis en los distintos navegadores que soporten WebAssembly (o al menos los que no compartan entre sí motor JavaScript: navegadores basados en Chromium, Firefox y Safari).
 
-** 
+* Memoria compartida
+Al tratar de pasar un array de JS a C++ y viceversa.
+WebAssembly.memory() para generar un espacio de memoria compartida entre WASM y JS.
+
