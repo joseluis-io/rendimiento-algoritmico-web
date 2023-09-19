@@ -1,18 +1,24 @@
 #+TITLE: Replicar entorno de desarrollo
 #+AUTHOR: José Luis de la Hoz García
 
-Para replicar la ejecución del entorno de desarrollo será necesario instalar [[https://emscripten.org/][emscripten]], un navegador web compatible con WebAssembly y un servidor HTTP.
+Para replicar la ejecución del entorno de desarrollo será necesario
+instalar [[https://emscripten.org/][emscripten]], un navegador web compatible con WebAssembly y un
+servidor HTTP.
 
-Compilación del código C++ para la generación de código binario WebAssembly:
+Compilación del código C++ para la generación de código binario
+WebAssembly:
 
 #+begin_src shell
   em++ algorithm.cpp -s WASM=1 -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['cwrap']" -o algorithm.js 
 #+end_src
 
-Servir el directorio "src" utilizando un servidor HTTP, el navegador no ejecuta WASM si no es recibido desde un servidor local. En mi caso utilizo "http-server":
+Servir el directorio "src" utilizando un servidor HTTP, el navegador
+no ejecuta WASM si no es recibido desde un servidor local. En mi caso
+utilizo "http-server":
 
 #+begin_src shell
   http-server
 #+end_src
 
-Finalmente acceder con un navegador web compatible a la dirección generada por el servidor local.
+Finalmente acceder con un navegador web compatible a la dirección
+generada por el servidor local.

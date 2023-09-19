@@ -3,8 +3,15 @@
 #+AUTHOR: José Luis de la Hoz García
 #+DATE: <2023-08-15 Tue>
 
-En el directorio "apuntes" se encuentran varios archivos .org con las ideas, retos, consideraciones y teoría que he recopilado a lo largo del desarrollo del trabajo de fin de grado.
+En el directorio "apuntes" se encuentran varios archivos .org con las
+ideas, retos, consideraciones y teoría que he recopilado a lo largo
+del desarrollo del trabajo de fin de grado.
 
-En el directorio "src" se encuentran los códigos fuentes de los algoritmos para evaluar su rendimiento.
+En el directorio "src" se encuentran los códigos fuentes de los
+algoritmos para evaluar su rendimiento.
 
-A medida que introduzca nuevos directorios iré resumiendo su contenido en este README. Los directorios que requieran más información acerca de lo que hay dentro, como podría ser un tutorial para replicar la ejecución de los algoritmos, se encontrarán en otro README dentro de dicho directorio.
+A medida que introduzca nuevos directorios iré resumiendo su contenido
+en este README. Los directorios que requieran más información acerca
+de lo que hay dentro, como podría ser un tutorial para replicar la
+ejecución de los algoritmos, se encontrarán en otro README dentro de
+dicho directorio.
