@@ -1,0 +1,43 @@
+#+TITLE: Log de datos de ejecución
+#+AUTHOR: José Luis de la Hoz García
+#+DATE: <2023-09-26 Tue>
+
+Para elaborar un informe fiable sobre las distintas ejecuciones de los
+algoritmos escogidos será necesario contar con una batería de datos
+que permitan realizar posteriormente un análisis formal.
+
+Los parámetros a priori imprescindibles son:
+
+- Tiempo de ejecución.
+- Memoria consumida.
+- Algoritmo ejecutado.
+- Argumento.
+- Valor retornado.
+
+Además, dichos datos serán obtenidos en distintos entornos o
+herramientas como:
+
+- Chrome.
+- NodeJS (JavaScript).
+- NodeJS (Módulo C++).
+- Deno (Módulo Rust).
+- WASM.
+- C++.
+  
+Espero poder utilizar el mismo sistema de logging para códigos
+JavaScript, y con suerte también en los relativos con módulos C++ y
+Rust. Sin embargo, es inevitable realizar otro en C++.
+
+Para simplificar la recopilación de datos tendré que tener en cuenta
+todos los parámetros necesarios así como el formato y
+almacenamiento. 
+
+¿Base de datos vs fichero?
+
+- ¿Proceso para cada ejecución o proceso con hilos independientes para
+cada ejecución en NodeJS?
+
+Puede que hacer un proceso con múltiples hilos de ejecución sea añadir
+complejidad innecesaria, se podría desarrollar los algoritmos
+interpretados en nodejs como una CLI y que fuera ejecutado cada vez
+que se introduzca un argumento nuevo.
