@@ -29,8 +29,7 @@ JavaScript, y con suerte también en los relativos con módulos C++ y
 Rust. Sin embargo, es inevitable realizar otro en C++.
 
 Para simplificar la recopilación de datos tendré que tener en cuenta
-todos los parámetros necesarios así como el formato y
-almacenamiento. 
+todos los parámetros necesarios así como el formato y almacenamiento.
 
 ¿Base de datos vs fichero?
 
@@ -41,3 +40,27 @@ Puede que hacer un proceso con múltiples hilos de ejecución sea añadir
 complejidad innecesaria, se podría desarrollar los algoritmos
 interpretados en nodejs como una CLI y que fuera ejecutado cada vez
 que se introduzca un argumento nuevo.
+
+Obtención del tiempo de ejecución en JS con la API perfomance.now().
+
+¿Consumo de memoria a partir de process.memoryUsage()?
+
+He intentado realizar la medición del consumo de memoria con el método
+indicado. El primer problema es que coge el uso de memoria del momento
+actual, y si lo convocamos antes y después de la ejecución del
+algoritmo el garbage collector ya habrá actuado dejando unos datos
+incorrectos respecto a la memoria consumida durante la ejecución.
+
+Tras esto intenté implementar un setInterval de 500ms y que haga una
+captura del consumo de memoria en intervalos de tiempo hasta que el
+algoritmo finalice. Este método conlleva otros problemas, siendo el
+principal que añade consumo de recursos al proceso NodeJS y no
+funciona correctamente debido a que el método no actúa siempre en los
+intervalos de tiempos exactos.
+
+Por ello voy a tratar de realizar un nuevo enfoque: obtener los datos
+del proceso node directamente desde un script separado del proceso del
+algoritmo. Permitiendo así poder utilizar esto no solo en Node, sino
+también en C++. De esta forma se debería observar los procesos en
+ejecución del navegador, node y denode; estandarizando así la
+obtención de los datos de ejecución.
