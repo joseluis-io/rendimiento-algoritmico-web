@@ -1,0 +1,33 @@
+* Objetivos
+
+** Análisis de los algoritmos
+
+*** Implementación
+Implementar los algoritmos utilizando los lenguajes y tecnologías
+siguientes: Chrome (JS), NodeJS (JS), NodeJS (C++), Deno (Rust) y C++.
+- Fibonacci recursivo
+- Búsqueda linear
+- Búsqueda binaria
+- Algoritmo de burbuja
+- Cola
+  
+*** Logging
+Desarrollar un sistema de loggeado estándar de los siguientes
+parámetros: tiempo de ejecución y consumo de memoria.  Se exportará a
+un formato de fichero que permita posteriormente analizar los datos
+obtenidos.
+
+*** Ejecuciones
+Realizar múltiples ejecuciones de los algoritmos para generar una
+muestra de datos con los logs.
+
+*** Análisis
+Analizar los datos resultantes usando análisis estadístico y generando
+gráficos para su visualización.
+
+** Memoria
+Explicar el desarrollo del TFG usando los apuntes del repositorio como
+guía.  A partir del análisis de los datos de las ejecuciones realizar
+una conclusión del trabajo. Incluir gráficas y fotografías necesarias.
+
+** Presentación
