@@ -65,15 +65,30 @@ también en C++. De esta forma se debería observar los procesos en
 ejecución del navegador, node y denode; estandarizando así la
 obtención de los datos de ejecución.
 
-* psprocess
+* psrecord
 La nueva aproximación será la monitorización de los principales
 parámetros de un proceso: porcentaje CPU, memoria real y tiempo. Para
 ello utilizaré una utilidad llamada psprocess, el cuál genera un
 reporte y una gráfica durante la ejecución del proceso.
 
-Este herramienta deberá ser ejecutada en paralelo junto con el algoritmo a evaluar, de forma que comience a generar el reporte en cuanto el proceso del algoritmo se inicie. Para ello se me ocurren dos formas: indicar mediante "inter-process communication" IPC el inicio de la ejecución o crear un script en bucle a la espera de que un proceso con determinado "process name" inicie la ejecución.
+Este herramienta deberá ser ejecutada en paralelo junto con el
+algoritmo a evaluar, de forma que comience a generar el reporte en
+cuanto el proceso del algoritmo se inicie. Para ello se me ocurren dos
+formas: indicar mediante "inter-process communication" IPC el inicio
+de la ejecución o crear un script en bucle a la espera de que un
+proceso con determinado "process name" inicie la ejecución.
 
 Una desventaja de psprocess es el formato txt plano que produce el
 reporte. Sería preferible un formato estándar con soporte para parsear
 los ficheros.
 
+** Desarrollo de script
+
+Voy a desarrollar un script POSIX Shell que pueda ejecutarse en
+cualquier máquina Unix/Unix-like. El objetivo de este script será
+monitorizar las ejecuciones de los algoritmos utilizando psprocess.
+
+Se encargará de detectar una nueva ejecución, que algoritmo se
+ejecuta, a que hora y generar un fichero de reporte con los datos
+anteriores en un directorio que incluirá todos los reportes,
+denominado "dataset".

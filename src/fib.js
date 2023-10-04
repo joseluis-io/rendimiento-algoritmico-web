@@ -3,10 +3,10 @@ const fib = (n) => {
     return fib(n - 1) + fib(n - 2);
 };
 
-const doFib = (n) => new Promise(() => {
+const doFib = (n) => {
     let result = chronoAlgorithm(fib, n);
     logExecution(fib, n, result);
-});
+};
 
 function chronoAlgorithm(algorithm, arg){
     let start = performance.now();
@@ -20,14 +20,8 @@ function logExecution(algorithm, arg, result){
     console.log(`{function: ${algorithm.name}, argument: ${arg}, time(ms): ${result.time}, return: ${result.value}}`);
 }
 
-const main = async () => {
-    doFib(0);
-    doFib(1);
-    doFib(2);
-    doFib(10);
-    doFib(20);
-    doFib(30);
-    doFib(40);
+const main =  () => {
+    doFib(50);
 };
 
 main();
