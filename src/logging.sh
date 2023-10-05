@@ -11,7 +11,7 @@ if  [ ! -d $dataset_dir ]; then
     mkdir $dataset_dir
 fi
 
-while ["$(pidof node)" = ""] ; do
+while [$process = ""] ; do
     process=$(pidof node)
 done
 

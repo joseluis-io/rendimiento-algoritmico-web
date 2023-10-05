@@ -1,0 +1,22 @@
+#+TITLE: Apuntes sobre NodeJS
+#+DATE: <2023-09-19 Tue>
+#+AUTHOR: José Luis de la Hoz García
+
+* Extensiones C++
+Las extensiones son objetos escritos en C++ y compartidos de forma
+enlazada dinámicamente. Proveen una interfaz entre JavaScript y
+librerías de C/C++. Para cargar una extensión se utilizará la función
+~require()~ que lo introducirá como si de un módulo NodeJS se tratase.
+
+Para la creación de extensiones C++ en NodeJS existen tres vías:
+1. [[https://nodejs.org/api/n-api.html][Node-API]]
+2. nan
+3. Librería V8
+
+Según la recomendación de la documentación es preferible usar
+directamente la API de NodeJS: Node-API. Por tanto trataré de utilizar
+dicha API para la implementación de las extensiones C++.
+
+Una de las ventajas de Node-API es que será estable en cualquier
+versión de NodeJS y aislará a las extensiones de los cambios
+producidos en el motor JavaScript.
