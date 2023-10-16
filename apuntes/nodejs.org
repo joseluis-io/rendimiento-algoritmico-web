@@ -20,3 +20,26 @@ dicha API para la implementación de las extensiones C++.
 Una de las ventajas de Node-API es que será estable en cualquier
 versión de NodeJS y aislará a las extensiones de los cambios
 producidos en el motor JavaScript.
+
+* Dependencias
+- node-addon-api
+- [[https://github.com/nodejs/node-gyp][node-gyp]]
+- Compiladores C/C++
+
+* Uso de la API
+[[http://nodejs.github.io/node-addon-examples/getting-started/first/][Proyecto básico tutorial de Node-API.]]
+
+GYP es una herramienta que permite tener un único fichero de
+configuración que funcione en todas las plataformas y arquitecturas
+que GYP soporta. Esto simplifica enormemente los esfuerzos por
+producir un ejecutable para cada plataforma soportada. NodeJS cuenta
+con su propia implementación de GYP conocida como ~node-gyp~ y es la
+herramienta por defecto para construir extensiones nativas. Para la
+construcción del proyecto se ejecutará ~node-gyp build~.
+
+Crear un módulo que cuente con todos los algoritmos implementados. Un
+módulo WASM, JavaScript, NodeJS/C++ y Deno/Rust.
+
+El módulo [[https://github.com/nodejs/node-addon-api#api-documentation][node-addon-api]] es un paquete npm que simplifica el uso de
+Node-API agregando clases "wrapper" C++.
+
