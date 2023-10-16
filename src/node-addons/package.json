@@ -1,0 +1,15 @@
+{
+  "main": "lib/binding.js",
+  "dependencies": {
+    "node-addon-api": "^1.1.0"
+  },
+  "scripts": {
+    "test": "node --napi-modules ./test/test_binding.js"
+  },
+  "gypfile": true,
+  "name": "node-addons",
+  "version": "1.0.0",
+  "description": "Algoritmos en C++ nativo como extensión de NodeJS.",
+  "author": "José Luis de la Hoz García",
+  "license": "ISC"
+}
