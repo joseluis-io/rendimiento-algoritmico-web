@@ -6,7 +6,7 @@ const dylib = Deno.dlopen(
   {
       "add": { parameters: ["isize", "isize"], result: "isize" },
       "sub": { parameters: ["isize", "isize"], result: "isize" },
-      "fib": { parameters: ["isize"], result: "isize" },
+      "fib": { parameters: ["u64"], result: "u64" },
   } as const,
 );
 
