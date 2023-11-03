@@ -80,3 +80,13 @@ crecen tan exponencialmente que sobrepasa la capacidad de 32
 bits. Tratando de poner un entero de 64 bits sin signo parece que no
 lo admite el navegador y lo trata como entero con signo de 32 bits
 (averiguar porque).
+
+* Búsqueda linear
+Utilizaré bucles ~for~ en vez de el método ~forEach~ del prototipo
+Array. En primer lugar para mantener la máxima homogeneidad entre los
+distintos códigos, y en segundo lugar porque el rendimiento del bucle
+~for~ es ligeramente superior.
+
+Implementaré la búsqueda linear con el bucle ~for~. Recorrerá el array
+hasta que encuentre el valor buscado, una vez encontrado retornará su
+índice. En caso de no hacerlo retornará el número entero -1.
