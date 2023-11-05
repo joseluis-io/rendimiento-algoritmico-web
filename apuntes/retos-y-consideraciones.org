@@ -90,3 +90,10 @@ distintos códigos, y en segundo lugar porque el rendimiento del bucle
 Implementaré la búsqueda linear con el bucle ~for~. Recorrerá el array
 hasta que encuentre el valor buscado, una vez encontrado retornará su
 índice. En caso de no hacerlo retornará el número entero -1.
+
+En JavaScript el prototipo ~Array~ cuenta con la propiedad ~length~
+que indica directamente al bucle ~for~ el tamaño del array. Sin
+embargo, otros lenguajes como C++ no cuentan con esto por lo que se le
+deberá indicar con un parámetro más. Podría calcularse el tamaño del
+array dinámicamente pero esto introduciría cambios respecto a otras
+implementaciones.
