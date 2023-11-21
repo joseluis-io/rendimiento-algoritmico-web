@@ -401,16 +401,6 @@
     "v8_use_siphash": 1,
     "want_separate_host_toolset": 0,
     "nodedir": "/home/joseluis/.cache/node-gyp/18.16.1",
-    "standalone_static_library": 1,
-    "userconfig": "/home/joseluis/.npmrc",
-    "cache": "/home/joseluis/.npm",
-    "local_prefix": "/home/joseluis/Documents/Universidad/2022-2023/TFG/rendimiento-algoritmico-web/src/node-addons",
-    "globalconfig": "/home/joseluis/.nvm/versions/node/v18.16.1/etc/npmrc",
-    "init_module": "/home/joseluis/.npm-init.js",
-    "prefix": "/home/joseluis/.nvm/versions/node/v18.16.1",
-    "user_agent": "npm/9.5.1 node/v18.16.1 linux x64 workspaces/false",
-    "metrics_registry": "https://registry.npmjs.org/",
-    "node_gyp": "/home/joseluis/.nvm/versions/node/v18.16.1/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
-    "global_prefix": "/home/joseluis/.nvm/versions/node/v18.16.1"
+    "standalone_static_library": 1
   }
 }

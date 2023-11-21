@@ -43,3 +43,11 @@ módulo WASM, JavaScript, NodeJS/C++ y Deno/Rust.
 El módulo [[https://github.com/nodejs/node-addon-api#api-documentation][node-addon-api]] es un paquete npm que simplifica el uso de
 Node-API agregando clases "wrapper" C++.
 
+Para el tratamiento en C++ de los objetos/arrays JavaScript
+debemos realizar una conversión nativa. De forma que convertimos el
+objeto JavaScript, realizamos las operaciones y de ser necesario crearemos
+un nuevo objeto/array JavaScript que retornaríamos a NodeJS.
+
+Para la reconversión nativa utilizaremos estructuras de datos
+compatibles entre sí. En este caso el array de enteros en C++ es
+compatible con el array tipado como Int32Array.
