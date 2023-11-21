@@ -4,12 +4,17 @@
 
 *** Implementación
 Implementar los algoritmos utilizando los lenguajes y tecnologías
-siguientes: Chrome (JS), NodeJS (JS), NodeJS (C++), Deno (Rust) y C++.
-- Fibonacci recursivo
-- Búsqueda linear
-- Búsqueda binaria
-- Algoritmo de burbuja
-- Cola
+siguientes:
+
+|----------------------+----+-----+------------+------+-----------|
+| Algoritmo            | JS | C++ | NodeJS/C++ | WASM | Deno/Rust |
+|----------------------+----+-----+------------+------+-----------|
+| Fibonacci recursivo  | X  | X   | X          | X    | X         |
+| Búsqueda linear      | X  | X   | X          |      |           |
+| Búsqueda binaria     |    |     |            |      |           |
+| Algoritmo de burbuja |    |     |            |      |           |
+| Cola                 |    |     |            |      |           |
+|----------------------+----+-----+------------+------+-----------|
   
 *** Logging
 Desarrollar un sistema de loggeado estándar de los siguientes
