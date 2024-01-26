@@ -10,7 +10,7 @@ siguientes:
 | Algoritmo            | JS | C++ | NodeJS/C++ | WASM | Deno/Rust |
 |----------------------+----+-----+------------+------+-----------|
 | Fibonacci recursivo  | X  | X   | X          | X    | X         |
-| Búsqueda linear      | X  | X   | X          |      |           |
+| Búsqueda linear      | X  | X   | X          | X    |           |
 | Búsqueda binaria     |    |     |            |      |           |
 | Algoritmo de burbuja |    |     |            |      |           |
 | Cola                 |    |     |            |      |           |

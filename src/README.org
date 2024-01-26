@@ -9,16 +9,9 @@ Compilación del código C++ para la generación de código binario
 WebAssembly:
 
 #+begin_src shell
-  em++ algorithm.cpp -s WASM=1 -s NO_EXIT_RUNTIME=1 -s "EXPORTED_RUNTIME_METHODS=['cwrap']" -o algorithm.js 
+  emcc algorithm.cpp -O2 -o algorithm.js
 #+end_src
 
-Servir el directorio "src" utilizando un servidor HTTP, el navegador
-no ejecuta WASM si no es recibido desde un servidor local. En mi caso
-utilizo "http-server":
-
-#+begin_src shell
-  http-server
-#+end_src
-
-Finalmente acceder con un navegador web compatible a la dirección
-generada por el servidor local.
+Servir el directorio ~src~ utilizando un servidor HTTP. En mi caso
+utilizo ~http-server~. Finalmente acceder a la dirección generada por
+el servidor local.

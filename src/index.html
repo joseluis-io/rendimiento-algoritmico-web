@@ -1,9 +1,22 @@
+<!doctype html>
 <html>
-  <body>
-    <script src="algorithm.js"></script>
-    <script src="fib.js"></script>
-    <script>
-      fib_c = Module.cwrap('fib', 'number', ['number']);
-    </script>
-  </body>
+<body>
+  <h1>Rendimiento de algoritmos en JS y WebAssembly</h1>
+  
+  <script src="./js/fib.js"></script>
+  <script src="./js/linear_search.js"></script>
+  <script>
+
+    WebAssembly.instantiateStreaming(fetch('./wasm/algorithm.wasm'))
+    .then(res => {
+	const { fib, linearSearch, memory } = res.instance.exports;
+	console.log(memory);
+	console.log(fib(5));
+	const array = new Int32Array(memory.buffer, 0, 5);
+	array.set([1,2,8,4,5]);
+	console.log(linearSearch(array, array.length, 8));
+    });
+
+  </script>
+</body>
 </html>
