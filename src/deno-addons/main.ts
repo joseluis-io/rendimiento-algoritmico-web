@@ -7,15 +7,15 @@ const dylib = Deno.dlopen(
       "add": { parameters: ["isize", "isize"], result: "isize" },
       "sub": { parameters: ["isize", "isize"], result: "isize" },
       "fib": { parameters: ["u64"], result: "u64" },
+      "linearSearch": {parameters: ["buffer", "usize", "isize"], result: "i32"},
   } as const,
 );
 
-// Call the symbol `add`
-const result = dylib.symbols.add(35, 34); // 69
-const subResult = dylib.symbols.sub(4, 2); // 2
+// FIB: Coge valor fib de argumentos CLI
 let fib = parseInt(Deno.args[0], 10);
 const fibResult = dylib.symbols.fib(fib);
-
-console.log(`Result from external addition of 35 and 34: ${result}`);
-console.log(`Resta externa de 4 y 2: ${subResult}`);
 console.log(`fib(${fib})=${fibResult}`);
+
+// Linear Search
+const array = Int32Array.from([1,2,3,8,5]);
+console.log(dylib.symbols.linearSearch(array, array.length, 8));
