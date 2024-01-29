@@ -1,0 +1,12 @@
+* Algoritmos Node/C++
+La implementación de los algoritmos se encuentra en
+~src/node_addons.cc~. Los test unitarios se encuentran en
+~test/test_binding.js~. Para la generación del proyecto y ejecución
+del proyecto:
+
+#+begin_src shell
+  npm install # Dependencias
+  node-gyp configure
+  node-gyp build
+  npm run test # Ejecuta los tests unitarios
+#+end_src

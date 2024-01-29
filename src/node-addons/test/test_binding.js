@@ -1,14 +1,28 @@
-const NodeAddons = require("../lib/binding.js");
+const { fibonacci, linearSearch } = require("../lib/binding.js");
 const assert = require("assert");
 
-assert(NodeAddons, "The expected function is undefined");
-
-function testBasic()
-{
-    const result =  NodeAddons("hello");
-    assert.strictEqual(result, "world", "Unexpected value returned");
+function testFibonacci() {
+  assert(fibonacci(0) == 0);
+  assert(fibonacci(1) == 1);
+  assert(fibonacci(2) == 1);
+  assert(fibonacci(3) == 2);
+  assert(fibonacci(4) == 3);
+  assert(fibonacci(5) == 5);
+  assert(fibonacci(10) == 55);
+  console.log("Fibonacci tests passed");
 }
 
-assert.doesNotThrow(testBasic, undefined, "testBasic threw an expection");
+function testLinearSearch() {
+  const array = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
+  assert(linearSearch(array.buffer, 7) == 6);
+  assert(linearSearch(array.buffer, 33) == -1);
+  console.log("LinearSearch tests passed");
+}
 
-console.log("Tests passed- everything looks OK!");
+function main() {
+  testFibonacci();
+  testLinearSearch();
+  console.log("Tests passed- everything looks OK!");
+}
+
+main();
