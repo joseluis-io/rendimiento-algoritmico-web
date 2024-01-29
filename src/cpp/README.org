@@ -1,0 +1,11 @@
+* Algoritmos en C++
+La definición e implementación de los algoritmos están en los ficheros
+~algorithm~. El fichero ~testAlgorithms.cpp~ realiza una serie de test
+unitarios para comprobar el correcto funcionamiento de los
+algoritmos. Por último, he desarrollado un fichero makefile para
+compilar y ejecutar los tests de la forma más simple posible.
+
+#+begin_src shell
+  make
+  ./testAlgorithms
+#+end_src
