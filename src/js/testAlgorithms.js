@@ -21,8 +21,8 @@ function testLinearSearch() {
 
 function testBinarySearch() {
   const sortedArray = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
-  assert(linearSearch(sortedArray, 7) == 6);
-  assert(linearSearch(sortedArray, 33) == -1);
+  assert(binarySearch(sortedArray, 7) == 6);
+  assert(binarySearch(sortedArray, 33) == -1);
   console.log("BinarySearch tests passed");
 }
 
