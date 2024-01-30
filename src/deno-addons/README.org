@@ -1,0 +1,11 @@
+* Algoritmos en Deno/Rust
+La implementación de los algoritmos se encuentra en el fichero
+~algorithm.rs~. Cuenta con test unitarios en ~test.ts~ y las funciones
+listas para su uso en ~main.ts~. Para la generación del binario y la
+ejecución, introducir los siguientes comandos:
+
+#+begin_src shell
+  rustc --crate-type
+  cdylib algorithm.rs deno run --allow-ffi --unstable main.ts # Ejecución
+  cdylib algorithm.rs deno run --allow-ffi --unstable tests.ts # Ejecución test unitarios
+#+end_src
