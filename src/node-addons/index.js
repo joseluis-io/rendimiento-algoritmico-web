@@ -1,1 +1,1 @@
-const {fibonacci, linearSearch} = require("./lib/binding.js");
+const {fibonacci, linearSearch, binarySearch} = require("./lib/binding.js");

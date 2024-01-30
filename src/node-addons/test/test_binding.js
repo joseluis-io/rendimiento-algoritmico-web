@@ -1,4 +1,4 @@
-const { fibonacci, linearSearch } = require("../lib/binding.js");
+const { fibonacci, linearSearch, binarySearch } = require("../lib/binding.js");
 const assert = require("assert");
 
 function testFibonacci() {
@@ -19,9 +19,17 @@ function testLinearSearch() {
   console.log("LinearSearch tests passed");
 }
 
+function testBinarySearch() {
+  const sortedArray = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
+  assert(binarySearch(sortedArray.buffer, 7) == 6);
+  assert(binarySearch(sortedArray.buffer, 33) == -1);
+  console.log("BinarySearch tests passed");
+}
+
 function main() {
   testFibonacci();
   testLinearSearch();
+  testBinarySearch();
   console.log("Tests passed- everything looks OK!");
 }
 
