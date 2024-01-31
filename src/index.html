@@ -31,16 +31,29 @@
           "linearSearch of 33",
         );
         console.log("LinearSearchWASM tests passed");
-        console.log(linearSearchWASM);
+      }
+
+      function testBinarySearch(binarySearchWASM, sortedArray) {
+        assert(
+          binarySearchWASM(sortedArray, sortedArray.length, 7) == 6,
+          "linearSearch of 7",
+        );
+        assert(
+          binarySearchWASM(sortedArray, sortedArray.length, 33) == -1,
+          "linearSearch of 33",
+        );
+        console.log("BinarySearchWASM tests passed");
       }
 
       WebAssembly.instantiateStreaming(fetch("./wasm/algorithm.wasm")).then(
         (res) => {
-          const { fib, linearSearch, memory } = res.instance.exports;
+          const { fib, linearSearch, binarySearch, memory } =
+            res.instance.exports;
           testFibonacci(fib);
           const array = new Int32Array(memory.buffer, 0, 8);
           array.set([1, 2, 3, 4, 5, 6, 7, 8]);
           testLinearSearch(linearSearch, array);
+          testBinarySearch(binarySearch, array);
         },
       );
     </script>

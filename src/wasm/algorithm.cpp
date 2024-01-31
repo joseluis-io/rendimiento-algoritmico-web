@@ -1,5 +1,6 @@
 #include <cinttypes>
 #include <emscripten/emscripten.h>
+#include <cmath>
 
 #ifdef __cplusplus
 #define EXTERN extern "C"
@@ -22,4 +23,22 @@ int linearSearch(int array[], int length, int searchValue){
   }
   return -1;
 }
+
+EXTERN EMSCRIPTEN_KEEPALIVE
+int binarySearch(int sortedArray[], int length, int search) {
+  int l = 0;
+  int r = length - 1;
+  while (l <= r) {
+    int m = std::floor((l + r) / 2);
+    if (sortedArray[m] < search) {
+      l = m + 1;
+    } else if (sortedArray[m] > search) {
+      r = m - 1;
+    } else {
+      return m;
+    }
+  }
+  return -1;
+}
+
 
