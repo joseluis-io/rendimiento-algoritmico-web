@@ -7,10 +7,11 @@ const dylib = Deno.dlopen(
   {
     "fib": { parameters: ["u64"], result: "u64" },
     "linearSearch": { parameters: ["buffer", "usize", "isize"], result: "i32" },
+    "binarySearch": { parameters: ["buffer", "usize", "isize"], result: "i32" },
   } as const,
 );
 
-const { fib, linearSearch } = dylib.symbols;
+const { fib, linearSearch, binarySearch } = dylib.symbols;
 
 function testFibonacci() {
   assert(fib(0) == 0);
@@ -30,17 +31,17 @@ function testLinearSearch() {
   console.log("LinearSearch tests passed");
 }
 
-// function testBinarySearch() {
-//   const sortedArray = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
-//   assert(linearSearch(sortedArray, 7) == 6);
-//   assert(linearSearch(sortedArray, 33) == -1);
-//   console.log("BinarySearch tests passed");
-// }
+function testBinarySearch() {
+  const sortedArray = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
+  assert(binarySearch(sortedArray, sortedArray.length, 7) == 6);
+  assert(binarySearch(sortedArray, sortedArray.length, 33) == -1);
+  console.log("BinarySearch tests passed");
+}
 
 function main() {
   testFibonacci();
   testLinearSearch();
-  // testBinarySearch();
+  testBinarySearch();
   console.log("Tests passed- everything looks OK!");
 }
 

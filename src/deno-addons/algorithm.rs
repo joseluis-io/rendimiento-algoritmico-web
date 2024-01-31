@@ -16,3 +16,21 @@ pub extern "C" fn linearSearch(array: *const i32, length: usize, search: i32) ->
     }
     -1
 }
+
+#[no_mangle]
+pub extern "C" fn binarySearch(array: *const i32, length: usize, search: i32) -> i32{
+    let sorted_array = unsafe { std::slice::from_raw_parts(array, length) };
+    let mut l = 0;
+    let mut r = length - 1;
+    while l <= r{
+	let m = (l+r)/2;
+	if sorted_array[m] < search{
+	    l = m + 1;
+	}else if sorted_array[m] > search{
+	    r = m - 1;
+	}else{
+	    return m as i32;
+	}
+    }
+    -1
+}

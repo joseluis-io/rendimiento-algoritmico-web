@@ -5,7 +5,7 @@ listas para su uso en ~main.ts~. Para la generación del binario y la
 ejecución, introducir los siguientes comandos:
 
 #+begin_src shell
-  rustc --crate-type
-  cdylib algorithm.rs deno run --allow-ffi --unstable main.ts # Ejecución
-  cdylib algorithm.rs deno run --allow-ffi --unstable tests.ts # Ejecución test unitarios
+  rustc --crate-type cdylib algorithm.rs
+  deno run --allow-ffi --unstable main.ts # Ejecución
+  deno run --allow-ffi --unstable tests.ts # Ejecución test unitarios
 #+end_src

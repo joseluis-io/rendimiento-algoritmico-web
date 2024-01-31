@@ -6,7 +6,8 @@ const dylib = Deno.dlopen(
   {
     "fib": { parameters: ["u64"], result: "u64" },
     "linearSearch": { parameters: ["buffer", "usize", "isize"], result: "i32" },
+    "binarySearch": { parameters: ["buffer", "usize", "isize"], result: "i32" },
   } as const,
 );
 
-const { fib, linearSearch } = dylib.symbols;
+const { fib, linearSearch, binarySearch } = dylib.symbols;
