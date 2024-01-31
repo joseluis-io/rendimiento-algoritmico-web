@@ -3,15 +3,13 @@
 
 Para replicar la ejecución del entorno de desarrollo será necesario
 instalar [[https://emscripten.org/][emscripten]], un navegador web compatible con WebAssembly y un
-servidor HTTP.
-
-Compilación del código C++ para la generación de código binario
-WebAssembly:
+servidor HTTP. Compilación del código C++ para la generación de código
+binario WebAssembly y servidor HTTP en el directorio ~src~:
 
 #+begin_src shell
   emcc algorithm.cpp -O2 -o algorithm.js
+  cd ../ && live-server
 #+end_src
 
-Servir el directorio ~src~ utilizando un servidor HTTP. En mi caso
-utilizo ~http-server~. Finalmente acceder a la dirección generada por
-el servidor local.
+La ejecución del código y test unitarios se encuentra en el fichero
+~src/index.html~.
