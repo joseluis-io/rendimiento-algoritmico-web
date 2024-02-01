@@ -1,4 +1,6 @@
-const { fibonacci, linearSearch, binarySearch } = require("./algorithm.js");
+const { fibonacci, linearSearch, binarySearch, bubbleSort } = require(
+  "./algorithm.js",
+);
 const assert = require("assert");
 
 function testFibonacci() {
@@ -26,10 +28,41 @@ function testBinarySearch() {
   console.log("BinarySearch tests passed");
 }
 
+function cmpArrays(x, y) {
+  if (x.length !== y.length) {
+    return false;
+  } else {
+    for (let i = 0; i < x.length; i++) {
+      if (x[i] !== y[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+
+function testBubbleSort() {
+  const unsortedArray = [3, 9, 10, 8, 7, 5, 2, 6, 1, 4];
+  const sortedArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const anotherSortedArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  bubbleSort(unsortedArray);
+  assert(
+    cmpArrays(unsortedArray, sortedArray),
+    "test bubbleSort(unsortedArray)",
+  );
+  bubbleSort(anotherSortedArray);
+  assert(
+    cmpArrays(anotherSortedArray, sortedArray),
+    "test bubbleSort(anotherSortedArray)",
+  );
+  console.log("BubbleSort tests passed");
+}
+
 function main() {
   testFibonacci();
   testLinearSearch();
   testBinarySearch();
+  testBubbleSort();
   console.log("Tests passed- everything looks OK!");
 }
 

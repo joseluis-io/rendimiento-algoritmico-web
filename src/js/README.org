@@ -1,0 +1,10 @@
+* Algoritmos en JS
+La implementación de los algoritmos se encuentra en el fichero
+~algorithm.js~. Cada algoritmo cuenta con test unitarios, en el
+fichero ~testAlgorithms.js~, para la comprobación del correcto
+funcionamiento de estos. Se puede usar tanto en el navegador como en
+NodeJS:
+
+#+begin_src shell
+  node testAlgorithms.js # Ejecución de los tests unitarios
+#+end_src

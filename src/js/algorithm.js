@@ -28,8 +28,27 @@ const binarySearch = (array, searchValue) => {
   return -1;
 };
 
+const bubbleSort = (array) => {
+  let i, j, temp, swapped;
+  for (i = 0; i < array.length - 1; i++) {
+    swapped = false;
+    for (j = 0; j < array.length - i - 1; j++) {
+      if (array[j] > array[j + 1]) {
+        temp = array[j];
+        array[j] = array[j + 1];
+        array[j + 1] = temp;
+        swapped = true;
+      }
+    }
+    if (swapped == false) {
+      break;
+    }
+  }
+};
+
 module.exports = {
   fibonacci,
   linearSearch,
   binarySearch,
+  bubbleSort,
 };
