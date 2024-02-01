@@ -1,4 +1,6 @@
-const { fibonacci, linearSearch, binarySearch } = require("../lib/binding.js");
+const { fibonacci, linearSearch, binarySearch, bubbleSort } = require(
+  "../lib/binding.js",
+);
 const assert = require("assert");
 
 function testFibonacci() {
@@ -26,10 +28,35 @@ function testBinarySearch() {
   console.log("BinarySearch tests passed");
 }
 
+function cmpArrays(x, y) {
+  if (x.length !== y.length) {
+    return false;
+  } else {
+    for (let i = 0; i < x.length; i++) {
+      if (x[i] !== y[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+
+function testBubbleSort() {
+  const unsortedArray = new Int32Array([3, 9, 10, 8, 7, 5, 2, 6, 1, 4]);
+  const sortedArray = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const anotherSortedArray = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  bubbleSort(unsortedArray.buffer);
+  assert(cmpArrays(unsortedArray, sortedArray));
+  bubbleSort(anotherSortedArray.buffer);
+  assert(cmpArrays(anotherSortedArray, sortedArray));
+  console.log("BubbleSort tests passed");
+}
+
 function main() {
   testFibonacci();
   testLinearSearch();
   testBinarySearch();
+  testBubbleSort();
   console.log("Tests passed- everything looks OK!");
 }
 

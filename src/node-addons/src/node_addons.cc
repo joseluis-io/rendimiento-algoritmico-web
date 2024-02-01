@@ -33,6 +33,23 @@ int binarySearch(int sortedArray[], int length, int search) {
   return -1;
 }
 
+void bubbleSort(int array[], int length) {
+  int i, j;
+  bool swapped;
+  for (i = 0; i < length - 1; i++) {
+    swapped = false;
+    for (j = 0; j < length - i - 1; j++) {
+      if (array[j] > array[j + 1]) {
+        std::swap(array[j], array[j + 1]);
+        swapped = true;
+      }
+    }
+    if (swapped == false) {
+      break;
+    }
+  }
+}
+
 Napi::Number Fibonacci(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   int value = info[0].As<Napi::Number>();
@@ -59,6 +76,14 @@ Napi::Number BinarySearch(const Napi::CallbackInfo &info) {
   return Napi::Number::New(env, result);
 }
 
+void BubbleSort(const Napi::CallbackInfo &info) {
+  Napi::Env env = info.Env();
+  Napi::ArrayBuffer arrayBuffer = info[0].As<Napi::ArrayBuffer>();
+  int length = arrayBuffer.ByteLength() / sizeof(int32_t);
+  int *array = reinterpret_cast<int32_t *>(arrayBuffer.Data());
+  bubbleSort(array, length);
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports.Set(Napi::String::New(env, "Fibonacci"),
               Napi::Function::New(env, Fibonacci));
@@ -66,6 +91,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
               Napi::Function::New(env, LinearSearch));
   exports.Set(Napi::String::New(env, "BinarySearch"),
               Napi::Function::New(env, BinarySearch));
+  exports.Set(Napi::String::New(env, "BubbleSort"),
+              Napi::Function::New(env, BubbleSort));
   return exports;
 }
 
