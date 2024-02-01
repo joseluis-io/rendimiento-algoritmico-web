@@ -27,10 +27,30 @@ void testBinarySearch() {
   std::cout << "Tests binarySearch OK" << std::endl;
 }
 
+bool cmpArrays(int x[], int y[], int length) {
+  for (int i = 0; i < length; i++) {
+    if (x[i] != y[i])
+      return false;
+  }
+  return true;
+}
+
+void testBubbleSort() {
+  int unsortedArray[] = {3, 9, 10, 8, 7, 5, 2, 6, 1, 4};
+  int sortedArray[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  int anotherSortedArray[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  bubbleSort(unsortedArray, 10);
+  assert(cmpArrays(unsortedArray, sortedArray, 10));
+  bubbleSort(anotherSortedArray, 10);
+  assert(cmpArrays(anotherSortedArray, sortedArray, 10));
+  std::cout << "Tests bubbleSort OK" << std::endl;
+}
+
 int main() {
   testFibonacci();
   testLinearSearch();
   testBinarySearch();
+  testBubbleSort();
   std::cout << "Todos los tests han pasado" << std::endl;
   return 0;
 }

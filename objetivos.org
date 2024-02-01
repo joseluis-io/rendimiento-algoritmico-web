@@ -12,7 +12,7 @@ siguientes:
 | Fibonacci recursivo  | X  | X   | X          | X    | X         |
 | Búsqueda linear      | X  | X   | X          | X    | X         |
 | Búsqueda binaria     | X  | X   | X          | X    | X         |
-| Algoritmo de burbuja |    |     |            |      |           |
+| Algoritmo de burbuja |    | X   |            |      |           |
 | Cola                 |    |     |            |      |           |
 |----------------------+----+-----+------------+------+-----------|
   
