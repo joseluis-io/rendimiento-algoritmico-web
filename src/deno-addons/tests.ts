@@ -8,10 +8,11 @@ const dylib = Deno.dlopen(
     "fib": { parameters: ["u64"], result: "u64" },
     "linearSearch": { parameters: ["buffer", "usize", "isize"], result: "i32" },
     "binarySearch": { parameters: ["buffer", "usize", "isize"], result: "i32" },
+    "bubbleSort": { parameters: ["buffer", "usize"], result: "void" },
   } as const,
 );
 
-const { fib, linearSearch, binarySearch } = dylib.symbols;
+const { fib, linearSearch, binarySearch, bubbleSort } = dylib.symbols;
 
 function testFibonacci() {
   assert(fib(0) == 0);
@@ -38,10 +39,44 @@ function testBinarySearch() {
   console.log("BinarySearch tests passed");
 }
 
+function cmpArrays(x, y) {
+  if (x.length !== y.length) {
+    return false;
+  } else {
+    for (let i = 0; i < x.length; i++) {
+      if (x[i] !== y[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+
+function testBubbleSort() {
+  const unsortedArray = new Int32Array([3, 9, 10, 8, 7, 5, 2, 6, 1, 4]);
+  const sortedArray = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const anotherSortedArray = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  bubbleSort(unsortedArray, unsortedArray.length);
+  assert(cmpArrays(unsortedArray, sortedArray), "bubbleSort(unsortedArray)");
+  bubbleSort(anotherSortedArray, unsortedArray.length);
+  assert(
+    cmpArrays(anotherSortedArray, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+    "bubbleSort(sortedArray)",
+  );
+  const sameNumbers = new Int32Array([3, 3, 3, 3]);
+  bubbleSort(sameNumbers, sameNumbers.length);
+  assert(
+    cmpArrays(sameNumbers, [3, 3, 3, 3]),
+    "bubbleSort(bubbleSort(sameNumbers))",
+  );
+  console.log("BubbleSort tests passed");
+}
+
 function main() {
   testFibonacci();
   testLinearSearch();
   testBinarySearch();
+  testBubbleSort();
   console.log("Tests passed- everything looks OK!");
 }
 
