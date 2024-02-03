@@ -41,4 +41,20 @@ int binarySearch(int sortedArray[], int length, int search) {
   return -1;
 }
 
-
+EXTERN EMSCRIPTEN_KEEPALIVE
+void bubbleSort(int array[], int length) {
+  int i, j;
+  bool swapped;
+  for (i = 0; i < length - 1; i++) {
+    swapped = false;
+    for (j = 0; j < length - i - 1; j++) {
+      if (array[j] > array[j + 1]) {
+        std::swap(array[j], array[j + 1]);
+        swapped = true;
+      }
+    }
+    if (swapped == false) {
+      break;
+    }
+  }
+}

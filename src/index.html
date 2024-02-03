@@ -45,15 +45,39 @@
         console.log("BinarySearchWASM tests passed");
       }
 
+      function cmpArrays(x, y) {
+        if (x.length !== y.length) {
+          return false;
+        } else {
+          for (let i = 0; i < x.length; i++) {
+            if (x[i] !== y[i]) {
+              return false;
+            }
+          }
+          return true;
+        }
+      }
+
+      function testBubbleSort(bubbleSortWASM, array) {
+        bubbleSortWASM(array, array.length);
+        assert(cmpArrays(array, [1, 2, 3, 4]), "bubbleSort: unsorted array");
+        bubbleSortWASM(array, array.length);
+        assert(cmpArrays(array, [1, 2, 3, 4]), "bubbleSort: sorted array");
+        console.log("BubbleSortWASM tests passed");
+      }
+
       WebAssembly.instantiateStreaming(fetch("./wasm/algorithm.wasm")).then(
         (res) => {
-          const { fib, linearSearch, binarySearch, memory } =
+          const { fib, linearSearch, binarySearch, bubbleSort, memory } =
             res.instance.exports;
           testFibonacci(fib);
           const array = new Int32Array(memory.buffer, 0, 8);
           array.set([1, 2, 3, 4, 5, 6, 7, 8]);
+          const unsortedArray = new Int32Array(memory.buffer, 0, 4);
+          unsortedArray.set([3, 2, 4, 1]);
           testLinearSearch(linearSearch, array);
           testBinarySearch(binarySearch, array);
+          testBubbleSort(bubbleSort, unsortedArray);
         },
       );
     </script>
