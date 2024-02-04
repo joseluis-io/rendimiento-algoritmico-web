@@ -46,9 +46,38 @@ const bubbleSort = (array) => {
   }
 };
 
+class Queue {
+  constructor() {
+    this.items = [];
+    this.head = 0;
+    this.tail = 0;
+  }
+
+  enqueue(element) {
+    this.items[this.tail] = element;
+    return this.tail++;
+  }
+
+  dequeue() {
+    const item = this.items[this.head];
+    this.items.splice(this.head, 1);
+    this.tail--;
+    return item;
+  }
+
+  peek() {
+    return this.items[this.head];
+  }
+
+  isEmpty() {
+    return this.tail === 0 && this.items.length === 0;
+  }
+}
+
 module.exports = {
   fibonacci,
   linearSearch,
   binarySearch,
   bubbleSort,
+  Queue,
 };
