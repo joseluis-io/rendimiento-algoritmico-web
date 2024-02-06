@@ -61,17 +61,18 @@ function testBubbleSort() {
 function testQueue() {
   const queue = new Queue();
   assert(queue.isEmpty(), "queue is empty");
-  assert(queue.enqueue(8) === 0, "enqueue(8)");
-  assert(!queue.isEmpty(), "queue not is empty");
-  assert(queue.enqueue(6) === 1, "enqueue(6)");
-  assert(queue.enqueue(5) === 2, "enqueue(5)");
-  assert(queue.peek() === 8, "peek 8");
+  assert(queue.push(8) === 0, "push(8)");
+  assert(!queue.isEmpty(), "queue is not empty");
+  assert(queue.push(6) === 1, "push(6)");
+  assert(queue.peek() === 8, "peek()===8");
+  assert(queue.push(5) === 2, "push(5)");
   assert(cmpArrays(queue.items, [8, 6, 5]), "queue elements");
-  assert(queue.dequeue() === 8, "dequeue 8");
-  assert(cmpArrays(queue.items, [6, 5]), "dequeue 8 cmp");
-  assert(queue.dequeue() === 6, "dequeue 6");
+  assert(queue.pop() === 8, "pop 8");
+  assert(queue.peek() === 6, "peek()===6");
+  assert(cmpArrays(queue.items, [6, 5]), "pop 8 cmp");
+  assert(queue.pop() === 6, "pop 6");
   assert(!queue.isEmpty(), "queue not is empty");
-  assert(queue.dequeue() === 5, "dequeue 5");
+  assert(queue.pop() === 5, "pop 5");
   assert(queue.isEmpty(), "queue is empty");
   assert(cmpArrays(queue.items, []), "queue elements");
   console.log("Queue tests passed");

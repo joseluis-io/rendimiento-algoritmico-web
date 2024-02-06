@@ -52,3 +52,12 @@ Al tratar de pasar un array de JS a C++ y viceversa.
 WebAssembly.memory() para generar un espacio de memoria compartida
 entre WASM y JS.
 
+* Cola
+Debo implementar una clase Cola con sus operaciones:
+- constructor por defecto
+- push(item) -> lenght(item) # Inserta elemento al final
+- pop() -> item # Elimina primer elemento
+- peek() -> item # Obtiene primer elemento sin eliminarlo
+- isEmpty -> boolean
+Utilizar comportamiento estándar de colas sobre dicha interfaz: std::queue o array.push.
+

@@ -49,28 +49,25 @@ const bubbleSort = (array) => {
 class Queue {
   constructor() {
     this.items = [];
-    this.head = 0;
-    this.tail = 0;
   }
 
-  enqueue(element) {
-    this.items[this.tail] = element;
-    return this.tail++;
+  push(item) {
+    this.items.push(item);
+    return this.items.length - 1;
   }
 
-  dequeue() {
-    const item = this.items[this.head];
-    this.items.splice(this.head, 1);
-    this.tail--;
+  pop() {
+    const item = this.items[0];
+    this.items.splice(0, 1);
     return item;
   }
 
   peek() {
-    return this.items[this.head];
+    return this.items[0];
   }
 
   isEmpty() {
-    return this.tail === 0 && this.items.length === 0;
+    return this.items.length === 0;
   }
 }
 
