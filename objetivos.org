@@ -13,7 +13,7 @@ siguientes:
 | Búsqueda linear      | X  | X   | X          | X    | X         |
 | Búsqueda binaria     | X  | X   | X          | X    | X         |
 | Algoritmo de burbuja | X  | X   | X          | X    | X         |
-| Cola                 | X  |     |            |      |           |
+| Cola                 | X  | X   |            |      |           |
 |----------------------+----+-----+------------+------+-----------|
   
 *** Logging

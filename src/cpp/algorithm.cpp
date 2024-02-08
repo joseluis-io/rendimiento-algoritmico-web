@@ -49,3 +49,17 @@ void bubbleSort(int array[], int length) {
     }
   }
 }
+
+int Queue::push(int item) {
+  this->items.push(item);
+  return this->items.size() - 1;
+}
+
+int Queue::pop() {
+  int item = this->items.front();
+  this->items.pop();
+  return item;
+}
+
+int Queue::peek() { return this->items.front(); }
+bool Queue::isEmpty() { return this->items.empty(); }

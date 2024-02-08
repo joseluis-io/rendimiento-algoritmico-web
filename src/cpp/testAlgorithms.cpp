@@ -1,6 +1,7 @@
 #include "algorithm.h"
 #include <cassert>
 #include <iostream>
+#include <queue>
 
 void testFibonacci() {
   assert(fib(0) == 0);
@@ -46,11 +47,26 @@ void testBubbleSort() {
   std::cout << "Tests bubbleSort OK" << std::endl;
 }
 
+void testQueue() {
+  Queue queue = Queue();
+  assert(queue.isEmpty());
+  assert(queue.push(10) == 0);
+  assert(!queue.isEmpty());
+  assert(queue.push(11) == 1);
+  assert(queue.peek() == 10);
+  assert(queue.pop() == 10);
+  assert(queue.peek() == 11);
+  assert(queue.pop() == 11);
+  assert(queue.isEmpty());
+  std::cout << "Tests Queue OK" << std::endl;
+}
+
 int main() {
   testFibonacci();
   testLinearSearch();
   testBinarySearch();
   testBubbleSort();
+  testQueue();
   std::cout << "Todos los tests han pasado" << std::endl;
   return 0;
 }
