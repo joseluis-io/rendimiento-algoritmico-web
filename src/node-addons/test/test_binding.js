@@ -1,4 +1,4 @@
-const { fibonacci, linearSearch, binarySearch, bubbleSort } = require(
+const { fibonacci, linearSearch, binarySearch, bubbleSort, Queue } = require(
   "../lib/binding.js",
 );
 const assert = require("assert");
@@ -52,11 +52,30 @@ function testBubbleSort() {
   console.log("BubbleSort tests passed");
 }
 
+function testQueue() {
+  const queue = new Queue();
+  assert(queue.isEmpty());
+  assert(queue.push(8) === 0);
+  assert(queue.peek() === 8);
+  assert(!queue.isEmpty());
+  assert(queue.push(6) === 1);
+  assert(queue.push(5) === 2);
+  assert(queue.peek() === 8);
+  assert(queue.pop() === 8);
+  assert(queue.peek() === 6);
+  assert(queue.pop() === 6);
+  assert(!queue.isEmpty());
+  assert(queue.pop() === 5);
+  assert(queue.isEmpty());
+  console.log("Queue tests passed");
+}
+
 function main() {
   testFibonacci();
   testLinearSearch();
   testBinarySearch();
   testBubbleSort();
+  testQueue();
   console.log("Tests passed- everything looks OK!");
 }
 

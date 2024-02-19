@@ -1,6 +1,7 @@
 #include <cinttypes>
 #include <cmath>
 #include <napi.h>
+#include <queue>
 
 uint64_t fib(uint64_t n) {
   if (n <= 1)
@@ -84,6 +85,58 @@ void BubbleSort(const Napi::CallbackInfo &info) {
   bubbleSort(array, length);
 }
 
+class Queue : public Napi::ObjectWrap<Queue> {
+public:
+  Queue(const Napi::CallbackInfo &);
+  Napi::Value push(const Napi::CallbackInfo &);
+  Napi::Value pop(const Napi::CallbackInfo &);
+  Napi::Value peek(const Napi::CallbackInfo &);
+  Napi::Value isEmpty(const Napi::CallbackInfo &);
+
+  static Napi::Function GetClass(Napi::Env);
+
+private:
+  std::queue<int> items;
+};
+
+Queue::Queue(const Napi::CallbackInfo &info) : ObjectWrap(info) {
+  Napi::Env env = info.Env();
+}
+
+Napi::Value Queue::push(const Napi::CallbackInfo &info) {
+  Napi::Env env = info.Env();
+  int value = info[0].As<Napi::Number>();
+  this->items.push(value);
+  return Napi::Number::New(env, this->items.size() - 1);
+}
+
+Napi::Value Queue::pop(const Napi::CallbackInfo &info) {
+  Napi::Env env = info.Env();
+  int item = this->items.front();
+  this->items.pop();
+  return Napi::Number::New(env, item);
+}
+
+Napi::Value Queue::peek(const Napi::CallbackInfo &info) {
+  Napi::Env env = info.Env();
+  return Napi::Number::New(env, this->items.front());
+}
+
+Napi::Value Queue::isEmpty(const Napi::CallbackInfo &info) {
+  Napi::Env env = info.Env();
+  return Napi::Boolean::New(env, this->items.empty());
+}
+
+Napi::Function Queue::GetClass(Napi::Env env) {
+  return DefineClass(env, "Queue",
+                     {
+                         Queue::InstanceMethod("isEmpty", &Queue::isEmpty),
+                         Queue::InstanceMethod("push", &Queue::push),
+                         Queue::InstanceMethod("pop", &Queue::pop),
+                         Queue::InstanceMethod("peek", &Queue::peek),
+                     });
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports.Set(Napi::String::New(env, "Fibonacci"),
               Napi::Function::New(env, Fibonacci));
@@ -93,6 +146,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
               Napi::Function::New(env, BinarySearch));
   exports.Set(Napi::String::New(env, "BubbleSort"),
               Napi::Function::New(env, BubbleSort));
+  exports.Set(Napi::String::New(env, "Queue"), Queue::GetClass(env));
+
   return exports;
 }
 
