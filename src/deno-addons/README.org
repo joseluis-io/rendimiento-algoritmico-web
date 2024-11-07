@@ -6,6 +6,7 @@ ejecución, introducir los siguientes comandos:
 
 #+begin_src shell
   rustc --crate-type cdylib algorithm.rs
+  rustc --crate-type cdylib queue.rs
   deno run --allow-ffi --unstable main.ts # Ejecución
   deno run --allow-ffi --unstable tests.ts # Ejecución test unitarios
 #+end_src

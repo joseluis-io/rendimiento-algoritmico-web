@@ -1,6 +1,7 @@
 #include <cinttypes>
 #include <emscripten/emscripten.h>
 #include <cmath>
+#include <emscripten/bind.h>
 
 #ifdef __cplusplus
 #define EXTERN extern "C"

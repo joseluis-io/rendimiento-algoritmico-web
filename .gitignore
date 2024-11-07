@@ -33,3 +33,5 @@ testAlgorithm
 *.out
 *.app
 tareas.org
+src/.vscode/settings.json
+.vscode/settings.json

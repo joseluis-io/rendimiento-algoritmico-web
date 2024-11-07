@@ -11,4 +11,13 @@ const dylib = Deno.dlopen(
   } as const,
 );
 
+
+
 const { fib, linearSearch, binarySearch, bubbleSort } = dylib.symbols;
+
+import {Queue} from './queue.js';
+
+let cola = new Queue();
+cola.push(3);
+console.log(cola.peek() === 3);
+console.log(cola.isEmpty());

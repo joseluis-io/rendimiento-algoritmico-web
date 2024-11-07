@@ -8,6 +8,7 @@ binario WebAssembly y servidor HTTP en el directorio ~src~:
 
 #+begin_src shell
   emcc algorithm.cpp -O2 -o algorithm.js
+  emcc -lembind -O2 -o queue.js queue.cpp
   cd ../ && live-server
 #+end_src
 
