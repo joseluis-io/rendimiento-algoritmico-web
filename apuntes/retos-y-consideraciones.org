@@ -97,3 +97,9 @@ embargo, otros lenguajes como C++ no cuentan con esto por lo que se le
 deberá indicar con un parámetro más. Podría calcularse el tamaño del
 array dinámicamente pero esto introduciría cambios respecto a otras
 implementaciones.
+
+* Cola WASM
+Los módulos WebAssembly son implementados directamente utilizando la
+API JS. No utilizo funciones como ~ccall()~ o ~cwrap()~ ya que añaden
+sobrecarga y limitan el control de las instancias a pesar de que
+facilitan la instancia de los módulos.

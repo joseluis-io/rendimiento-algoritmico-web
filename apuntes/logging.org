@@ -50,7 +50,7 @@ indicado. El primer problema es que coge el uso de memoria del momento
 actual, y si lo convocamos antes y después de la ejecución del
 algoritmo el garbage collector ya habrá actuado dejando unos datos
 incorrectos respecto a la memoria consumida durante la ejecución.
-
+y
 Tras esto intenté implementar un setInterval de 500ms y que haga una
 captura del consumo de memoria en intervalos de tiempo hasta que el
 algoritmo finalice. Este método conlleva otros problemas, siendo el

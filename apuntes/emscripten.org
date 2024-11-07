@@ -11,7 +11,9 @@ intermedia del código fuente y sustituirá los compiladores estándar
 como clang o cgg.
 
 Emscripten cuenta con su propia tecnología de [[https://emscripten.org/docs/getting_started/test-suite.html#benchmarking][benchmarking]] para medir
-velocidad y tamaño del código
+velocidad y tamaño del código.
+
+[[https://emscripten.org/docs/porting/connecting_cpp_and_javascript/embind.html#embind][Embind]] sirve para asociar código C++ a JavaScript. 
 
 * [[https://emscripten.org/docs/optimizing/Optimizing-Code.html#optimizing-code][Optimización de código wasm]]
 Existen distintos flags en emscripten para indicar niveles de

@@ -51,3 +51,7 @@ un nuevo objeto/array JavaScript que retornaríamos a NodeJS.
 Para la reconversión nativa utilizaremos estructuras de datos
 compatibles entre sí. En este caso el array de enteros en C++ es
 compatible con el array tipado como Int32Array.
+
+* [[https://github.com/toyobayashi/emnapi][emnapi]]
+Implementación Node-API para emscripten. Permite portar extensiones
+nativas de NodeJS a WASM con el menor número de cambios al código original.
