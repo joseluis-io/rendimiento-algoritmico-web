@@ -9,4 +9,5 @@ del proyecto:
   node-gyp configure
   node-gyp build
   npm run test # Ejecuta los tests unitarios
+  npm run main
 #+end_src

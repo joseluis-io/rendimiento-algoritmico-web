@@ -5,6 +5,7 @@
     "node-gyp": "^10.1.0"
   },
   "scripts": {
+    "main": "node --napi-modules ./main.js",
     "test": "node --napi-modules ./test/test_binding.js"
   },
   "gypfile": true,
