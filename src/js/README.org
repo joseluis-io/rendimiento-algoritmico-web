@@ -7,4 +7,6 @@ NodeJS:
 
 #+begin_src shell
   node testAlgorithms.js # Ejecución de los tests unitarios
+  node benchmark.js
+  live-server # Abrir en el navegador el fichero index.html y abrir consola del desarrollador.
 #+end_src

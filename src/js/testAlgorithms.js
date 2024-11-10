@@ -1,7 +1,6 @@
-const { fibonacci, linearSearch, binarySearch, bubbleSort, Queue } = require(
-  "./algorithm.js",
-);
-const assert = require("assert");
+import { fibonacci, linearSearch, binarySearch, bubbleSort, Queue } from
+  "./algorithm.js"
+import assert from "assert";
 
 function testFibonacci() {
   assert(fibonacci(0) == 0);

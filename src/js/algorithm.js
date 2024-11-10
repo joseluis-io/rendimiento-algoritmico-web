@@ -1,9 +1,9 @@
-const fibonacci = (n) => {
+export const fibonacci = (n) => {
   if (n <= 1) return n;
   return fibonacci(n - 1) + fibonacci(n - 2);
 };
 
-const linearSearch = (array, searchValue) => {
+export const linearSearch = (array, searchValue) => {
   for (let i = 0; i < array.length; i++) {
     if (array[i] === searchValue) {
       return i;
@@ -12,7 +12,7 @@ const linearSearch = (array, searchValue) => {
   return -1;
 };
 
-const binarySearch = (array, searchValue) => {
+export const binarySearch = (array, searchValue) => {
   let l = 0;
   let r = array.length - 1;
   while (l <= r) {
@@ -28,7 +28,7 @@ const binarySearch = (array, searchValue) => {
   return -1;
 };
 
-const bubbleSort = (array) => {
+export const bubbleSort = (array) => {
   let i, j, temp, swapped;
   for (i = 0; i < array.length - 1; i++) {
     swapped = false;
@@ -46,7 +46,7 @@ const bubbleSort = (array) => {
   }
 };
 
-class Queue {
+export class Queue {
   constructor() {
     this.items = [];
   }
@@ -70,11 +70,3 @@ class Queue {
     return this.items.length === 0;
   }
 }
-
-module.exports = {
-  fibonacci,
-  linearSearch,
-  binarySearch,
-  bubbleSort,
-  Queue,
-};
