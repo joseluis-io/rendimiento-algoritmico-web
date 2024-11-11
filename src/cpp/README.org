@@ -8,5 +8,5 @@ compilar y ejecutar los tests de la forma más simple posible.
 #+begin_src shell
   make
   ./testAlgorithms
-  clang++ -o main main.cpp algorithm.cpp
+  clang++ -O3 -o main main.cpp algorithm.cpp
 #+end_src
