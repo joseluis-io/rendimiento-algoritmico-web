@@ -7,7 +7,7 @@ servidor HTTP. Compilación del código C++ para la generación de código
 binario WebAssembly y servidor HTTP en el directorio ~src~:
 
 #+begin_src shell
-  emcc algorithm.cpp -O2 -o algorithm.js
+  emcc -O3 -o algorithm.js algorithm.cpp -s WASM=1 -s EXPORTED_FUNCTIONS="['_fib', '_linearSearch', '_binarySearch', '_bubbleSort']" -s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap']"
   emcc -lembind -O2 -o queue.js queue.cpp
   cd ../ && live-server
 #+end_src
