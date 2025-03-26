@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+<style>
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: black;
+      color: whitesmoke;
+    }
+  }
+</style>
+
+<body>
+  <h1>Ejecución de test unitarios</h1>
+  <p>Resultados en la consola del desarrollador.</p>
+
+  <!-- <script src="./js/algorithm.js"></script> -->
+  <script src="./queue.js"></script>
+  <script>
+    function assert(condition, message) {
+      if (condition) return true;
+      else throw new Error("Test " + message + " failed");
+    }
+
+    function testFibonacci(fibWASM) {
+      assert(fibWASM(0) == 0, "fib(0)");
+      assert(fibWASM(1) == 1, "fib(1)");
+      assert(fibWASM(2) == 1, "fib(2)");
+      assert(fibWASM(3) == 2, "fib(3)");
+      assert(fibWASM(4) == 3, "fib(4)");
+      assert(fibWASM(5) == 5, "fib(5)");
+      assert(fibWASM(10) == 55, "fib(10)");
+      console.log("FibWASM tests passed");
+    }
+
+    function testWorstCaseLinearSearch(linearSearchWASM, memory) {
+      const orderedAr20 = new Int32Array(memory.buffer, 0, 20);
+      orderedAr20.forEach((val, i, arr) => arr[i] = i);
+
+      assert(
+        linearSearchWASM(orderedAr20, orderedAr20.length, 19) === 19,
+        "linearSearch worst case: last element"
+      );
+
+      assert(
+        linearSearchWASM(orderedAr20, orderedAr20.length, 33) === -1,
+        "linearSearch worst case: target not present"
+      );
+
+      console.log("LinearSearchWASM tests passed");
+    }
+
+    function testWorstCaseBinarySearch(binarySearchWASM, memory) {
+      const orderedAr20 = new Int32Array(memory.buffer, 0, 20);
+      orderedAr20.forEach((val, i, arr) => arr[i] = i);
+
+      assert(
+        binarySearchWASM(orderedAr20, orderedAr20.length, 0) === 0,
+        "binarySearch worst case: first element"
+      );
+
+      assert(
+        binarySearchWASM(orderedAr20, orderedAr20.length, 19) === 19,
+        "binarySearch worst case: last element"
+      );
+
+      assert(
+        binarySearchWASM(orderedAr20, orderedAr20.length, 33) === -1,
+        "binarySearch worst case: target not present"
+      );
+
+      console.log("BinarySearchWASM tests passed");
+    }
+
+    function cmpArrays(x, y) {
+      if (x.length !== y.length) {
+        return false;
+      } else {
+        for (let i = 0; i < x.length; i++) {
+          if (x[i] !== y[i]) {
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+
+    function testWorstCaseBubbleSort(bubbleSortWASM, memory) {
+      // TEST: reversed array to sort.
+      const reverseAr5 = new Int32Array(memory.buffer, 0, 5);
+      reverseAr5.forEach((val, i, arr) => arr[i] = reverseAr5.length - 1 - i);
+      bubbleSortWASM(reverseAr5, reverseAr5.length);
+      assert(cmpArrays(reverseAr5, [0, 1, 2, 3, 4]), "array reverso")
+
+      console.log("BubbleSortWASM tests passed");
+    }
+
+    function testQueue() {
+      var queue = new Module.Queue();
+      assert(queue.isEmpty(), "queue is empty");
+      assert(queue.push(8) === 0, "push(8)");
+      assert(!queue.isEmpty(), "queue is not empty");
+      assert(queue.push(6) === 1, "push(6)");
+      assert(queue.peek() === 8, "peek()===8");
+      assert(queue.push(5) === 2, "push(5)");
+      // assert(cmpArrays(queue.items, [8, 6, 5]), "queue elements");
+      assert(queue.pop() === 8, "pop 8");
+      assert(queue.peek() === 6, "peek()===6");
+      // assert(cmpArrays(queue.items, [6, 5]), "pop 8 cmp");
+      assert(queue.pop() === 6, "pop 6");
+      assert(!queue.isEmpty(), "queue not is empty");
+      assert(queue.pop() === 5, "pop 5");
+      assert(queue.isEmpty(), "queue is empty");
+      // assert(cmpArrays(queue.items, []), "queue elements");
+      console.log("QueueWASM tests passed");
+    }
+
+    WebAssembly.instantiateStreaming(fetch("./algorithm.wasm")).then(
+      (res) => {
+        const { fib, linearSearch, binarySearch, bubbleSort, memory } =
+          res.instance.exports;
+
+        testFibonacci(fib);
+        testWorstCaseLinearSearch(linearSearch, memory);
+        testWorstCaseBinarySearch(binarySearch, memory);
+        testWorstCaseBubbleSort(bubbleSort, memory);
+        testQueue();
+      },
+    );
+
+  </script>
+</body>
+
+</html>

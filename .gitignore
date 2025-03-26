@@ -1,6 +1,8 @@
 *.*~
 *.o
 testAlgorithm
+dataset
+tfg.org
 *.d
 
 # Compiled Object files

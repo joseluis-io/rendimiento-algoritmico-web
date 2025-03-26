@@ -21,7 +21,7 @@ function benchmark(algorithm, inputs) {
     algorithm(input);
     const end = performance.now();
     results.push({
-      algorithm: algorithm.name,
+      algorithm: "fibonacci",
       input: input,
       time: end - start
     });
@@ -41,7 +41,7 @@ function benchmarkLinearSearch(linearSearch) {
   const sizes = [100, 1000, 5000, 10000, 100000, 1000000, 10000000];
   const results = [];
   sizes.forEach(size => {
-      const array = generateInt32Array(sizes);
+      const array = generateInt32Array(size);
       const searchValue = size;
       const start = performance.now();
       const result = linearSearch(array, array.length, searchValue);
@@ -61,7 +61,7 @@ function benchmarkBinarySearch(binarySearch) {
   const results = [];
   const sizes = [100, 1000, 5000, 10000, 100000, 1000000, 10000000];
   sizes.forEach(size => {
-      const array = generateInt32Array(sizes);
+      const array = generateInt32Array(size);
       const searchValue = size;
       const start = performance.now();
       const result = binarySearch(array, array.length, searchValue);
@@ -81,15 +81,16 @@ function benchmarkBubbleSort(bubbleSort) {
   const results = [];
   const sizes = [100, 1000, 5000, 10000, 100000];
   sizes.forEach(size => {
-      const array = generateInt32Array(size);
+      const reversedArray = generateInt32Array(size).reverse();
+      console.log(reversedArray)
       const start = performance.now();
-      bubbleSort(array, array.length);
+      bubbleSort(reversedArray, reversedArray.length);
       const end = performance.now();
       const duration = end - start;
       results.push({
           algorithm: "bubbleSort",
           input: `bubbleSort(Array[${size}])`,
-          result: array,
+          result: reversedArray,
           time: duration
       });
   });
@@ -127,29 +128,38 @@ function getCurrentDateTime() {
   return `${year}${month}${day}T${hours}${minutes}`;
 }
 
-async function exportToCSV(results, algorithmName, environment) {
+async function exportToCSV(results, algorithmName, environment, debug=false) {
   const dateTime = getCurrentDateTime();
   const filename = `../../dataset/${algorithmName}_${environment}--${dateTime}.csv`;
   const header = 'Algorithm,Input,Time\n';
-  const rows = results.map(result => `${algorithmName},${result.input},${result.time}`).join('\n');
+  const rows = results.map(result => `${result.algorithm},${result.input},${result.time}`).join('\n');
   const csvContent = header + rows;
 
-  try {
-    await Deno.writeTextFile(filename, csvContent);
-    console.log(`Benchmark completado y resultados exportados a ${filename}`);
-  } catch (err) {
-    console.error(`Error al escribir el archivo ${filename}:`, err);
+  if(debug){
+    console.log(csvContent);
+    console.log(results);
+    return;
   }
+
+  console.log(csvContent);
+  console.log(results);
+  Deno.writeTextFileSync(filename, csvContent);
 }
+
 
 const inputs = Array.from({ length: 20 }, (_, i) => i);
 
 // const results = benchmark(fib, inputs);
-
-console.log(benchmark(fib, inputs));
-console.log(benchmarkLinearSearch(linearSearch));
-console.log(benchmarkBinarySearch(binarySearch));
-console.log(benchmarkBubbleSort(bubbleSort));
-console.log(benchmarkQueue());
-
 // exportToCSV(results, 'fibonacci', "deno-rust");
+
+// const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
+// exportToCSV(resultsLinearSearch, 'linearSearch', "deno-rust");
+
+// const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
+// exportToCSV(resultsBinarySearch, 'binarySearch', "deno-rust");
+
+const resultsBubbleSort = benchmarkBubbleSort(bubbleSort);
+exportToCSV(resultsBubbleSort, 'bubbleSort', "deno-rust", true);
+
+// const resultsQueue = benchmarkQueue();
+// exportToCSV(resultsQueue, "queue", "deno-rust");

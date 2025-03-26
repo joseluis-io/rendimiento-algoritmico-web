@@ -1,10 +1,42 @@
 import { binarySearch, bubbleSort, fibonacci, linearSearch, Queue } from './algorithm.js';
-const isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
+const isDeno = typeof Deno !== "undefined";
+const isNode = !isDeno && typeof process !== 'undefined' && process.versions?.node != null;
+const isBrowser = typeof window !== "undefined";
+
+function getEnvironmentInfo() {
+    if (isDeno) {
+        return {
+            runtime: "Deno",
+            version: Deno.version.deno,
+            os: Deno.build.os
+        };
+    }
+    if (isNode) {
+        return {
+            runtime: "Node.js",
+            version: process.version,
+            platform: process.platform
+        };
+    }
+    if (isBrowser) {
+        return {
+            runtime: "Browser",
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            language: navigator.language,
+        };
+    }
+    return { runtime: "Unknown" };
+}
+
+const environmentInfo = getEnvironmentInfo();
+
+console.log(getEnvironmentInfo());
+
+
+// import dinámico 'fs' nodejs
 let writeFileSync;
-
-
-// import dinámico
 async function setupFileSystem() {
     if (isNode) {
         const fs = await import('fs');
@@ -71,15 +103,15 @@ function benchmarkBubbleSort(bubbleSort) {
     const results = [];
     const sizes = [100, 1000, 5000, 10000, 100000];
     sizes.forEach(size => {
-        const array = Array.from({ length: size }, (_, i) => Math.floor(Math.random() * 10000));
+        const reversedArray = Array.from({ length: size }, (_, i) => i).reverse();
         const start = performance.now();
-        bubbleSort(array);
+        bubbleSort(reversedArray);
         const end = performance.now();
         const duration = end - start;
         results.push({
             algorithm: "bubbleSort",
             input: `bubbleSort(Array[${size}])`,
-            result: array,
+            result: reversedArray,
             time: duration
         });
     });
@@ -117,37 +149,46 @@ function getCurrentDateTime() {
     return `${year}${month}${day}T${hours}${minutes}`;
 }
 
-async function exportToCSV(results, algorithmName, environment) {
+// TODO: autodetect browser user-agent & javascript runtime
+async function exportToCSV(results, algorithmName, environment, debug = false) {
     const dateTime = getCurrentDateTime();
-    const filename = `../../dataset/${algorithmName}_${environment}--${dateTime}.csv`;
+    const filename = `../../dataset/${algorithmName}_${environment.runtime}--${dateTime}.csv`;
     const header = 'Algorithm,Input,Time\n';
     const rows = results.map(result => `${result.algorithm},${result.input},${result.time}`).join('\n');
     const csvContent = header + rows;
 
-    await setupFileSystem();
+    if (debug) {
+        console.log(results)
+        console.log(csvContent)
+        return;
+    }
 
-    // Ejecución Node.js -> fs
-    if (writeFileSync) {
+    if (isNode) {
+        await setupFileSystem();
         writeFileSync(filename, csvContent);
         console.log(`Resultados exportados al fichero: ${filename}`);
-    } else {
-        // Navegador -> consola
+    } else if (isDeno) {
+        Deno.writeTextFileSync(filename, csvContent);
+        console.log(`Resultados exportados al fichero: ${filename}`);
+    }
+    else {
         console.log(csvContent);
     }
 }
 
 const inputs = Array.from({ length: 20 }, (_, i) => i);
 
-const results = benchmark(fibonacci, inputs);
-console.log(results);
+const resultsFibonacci = benchmark(fibonacci, inputs);
+exportToCSV(resultsFibonacci, 'fibonacci', environmentInfo);
 
-console.log(benchmarkLinearSearch(linearSearch));
+const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
+exportToCSV(resultsLinearSearch, 'linearSearch', environmentInfo);
 
-console.log(benchmarkBinarySearch(binarySearch));
+const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
+exportToCSV(resultsBinarySearch, 'binarySearch', environmentInfo);
 
-console.log(benchmarkBubbleSort(bubbleSort));
+const resultsBubbleSort = benchmarkBubbleSort(bubbleSort);
+exportToCSV(resultsBubbleSort, 'bubbleSort', environmentInfo, true);
 
-console.log(benchmarkQueue());
-
-
-// exportToCSV(results, 'fibonacci', isNode ? "node" : "browser");
+const resultsQueue = benchmarkQueue();
+exportToCSV(resultsQueue, "queue", environmentInfo);

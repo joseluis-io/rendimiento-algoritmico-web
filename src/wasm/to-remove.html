@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WASM</title>
+    <script src="algorithm.js"></script>
+</head>
+
+<body>
+    <script>
+        Module.onRuntimeInitialized = function () {
+            const fib = Module.cwrap('fib', 'number', ['number'], [10]);
+            const inputs = Array.from({ length: 20 }, (_, i) => i);
+
+
+            const results = benchmarkFibonacci(fib, inputs);
+            console.log(exportToCSV(results, "fibonacci", "wasm"));
+
+            const linearSearch = Module.cwrap('linearSearch', 'number', ['array', 'number', 'number']);
+            // const array = new Int32Array();
+            // array.set([1, 2, 3, 4, 5, 6, 7, 8]);
+            // const array = [1,2,3,4,5]
+            // const searchResultLinear = Module.ccall('linearSearch', 'number', ['array', 'number', 'number'], [array, array.length, 3]);
+            // console.log(searchResultLinear);
+            // console.log(linearSearch(array, 4));
+
+            let array = [1, 2, 3, 4, 5];
+            let num = 10;
+            let typedArray = new Int32Array(array);
+            let pointer = Module._malloc(
+                typedArray.length * typedArray.BYTES_PER_ELEMENT
+            );
+            Module.HEAP32.set(
+                typedArray, pointer / typedArray.BYTES_PER_ELEMENT
+            );
+
+            // Llamar a la función linearSearch
+            var result = linearSearch(pointer, array.length, 3);
+
+            // Mostrar el resultado
+            console.log("Result of linear search: ", result);
+
+            // console.log(benchmarkLinearSearch(linearSearch));
+
+            //   const searchResultBinary = Module.ccall('binarySearch', 'number', ['array', 'number', 'number'], [array, array.length, 3]);
+            //   console.log('Búsqueda binaria (3):', searchResultBinary);
+
+            //   const arrayDesordenado = [5, 3, 2, 4, 1]
+            //   Module.ccall('bubbleSort', null, ['array', 'number'], [arrayDesordenado, array.length]);
+            //   console.log('Array ordenado:', array);
+        }
+
+
+        function benchmarkFibonacci(algorithm, inputs) {
+            const results = [];
+            for (const input of inputs) {
+                const start = performance.now();
+                algorithm(input);
+                const end = performance.now();
+                results.push({
+                    algorithm: algorithm.name,
+                    input: input,
+                    time: end - start
+                });
+            }
+            return results;
+        }
+
+        function benchmarkLinearSearch(linearSearch) {
+            const sizes = [100, 1000, 5000, 10000];
+            const results = [];
+            sizes.forEach(size => {
+                const array = Array.from({ length: size }, (_, i) => i + 1);
+                const searchValue = size;
+                const start = performance.now();
+                const result = linearSearch(array, array.length, searchValue);
+                const end = performance.now();
+                const duration = end - start;
+                results.push({
+                    algorithm: "linearSearch",
+                    input: `LinearSearch(Array[${size}])`,
+                    result: result,
+                    time: duration
+                });
+            });
+            return results;
+        }
+
+        // formato: YYYYMMDDTHHMM
+        function getCurrentDateTime() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${year}${month}${day}T${hours}${minutes}`;
+        }
+
+        function exportToCSV(results, algorithmName, environment) {
+            const dateTime = getCurrentDateTime();
+            const filename = `../../dataset/${algorithmName}_${environment}--${dateTime}.csv`;
+            const header = 'Algorithm,Input,Time\n';
+            const rows = results.map(result => `${algorithmName},${result.input},${result.time}`).join('\n');
+            const csvContent = header + rows;
+            return csvContent;
+        }
+    </script>
+</body>
+
+</html>

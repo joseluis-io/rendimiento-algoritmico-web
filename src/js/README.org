@@ -6,7 +6,11 @@ funcionamiento de estos. Se puede usar tanto en el navegador como en
 NodeJS:
 
 #+begin_src shell
-  node testAlgorithms.js # Ejecución de los tests unitarios
-  node benchmark.js
-  live-server # Abrir en el navegador el fichero index.html y abrir consola del desarrollador.
+  node testAlgorithms.js # Tests unitarios
+  node benchmark.js # Benchmark NodeJS
+  deno benchmark.js --allow-write # Benchmark Deno
 #+end_src
+
+Para la ejecución del benchamrk en el navegador se necesita un servidor http que sirva el directorio.
+Cuando el servidor http esté listo, acceder a la dirección:puerto propuesta por el programa.
+El navegador abrirá directamente el fichero ~index.html~, el cual ejecutará el benchmark directamente.

@@ -3,20 +3,21 @@ import { fibonacci, linearSearch, binarySearch, bubbleSort, Queue } from
 import assert from "assert";
 
 function testFibonacci() {
-  assert(fibonacci(0) == 0);
-  assert(fibonacci(1) == 1);
-  assert(fibonacci(2) == 1);
-  assert(fibonacci(3) == 2);
-  assert(fibonacci(4) == 3);
-  assert(fibonacci(5) == 5);
-  assert(fibonacci(10) == 55);
+  assert(fibonacci(0) === 0);
+  assert(fibonacci(1) === 1);
+  assert(fibonacci(2) === 1);
+  assert(fibonacci(3) === 2);
+  assert(fibonacci(4) === 3);
+  assert(fibonacci(5) === 5);
+  assert(fibonacci(10) === 55);
   console.log("Fibonacci tests passed");
 }
 
 function testLinearSearch() {
   const array = new Int32Array([1, 2, 3, 4, 5, 6, 7, 8]);
-  assert(linearSearch(array, 7) == 6);
-  assert(linearSearch(array, 33) == -1);
+  assert(linearSearch(array, 7) === 6);
+  assert(linearSearch(array, 33) === -1); // Worst case
+  assert(linearSearch(array, 8) === 8);
   console.log("LinearSearch tests passed");
 }
 
@@ -49,11 +50,22 @@ function testBubbleSort() {
     cmpArrays(unsortedArray, sortedArray),
     "test bubbleSort(unsortedArray)",
   );
+  console.log(unsortedArray)
   bubbleSort(anotherSortedArray);
   assert(
     cmpArrays(anotherSortedArray, sortedArray),
     "test bubbleSort(anotherSortedArray)",
   );
+
+  // TEST: worts case scenario with reversed 20 array
+  const sorted20arr = Array.from({ length: 20 }, (_, i) => i);
+  const reversed20arr = Array.from({ length: 20 }, (_, i) => i).reverse();
+  bubbleSort(reversed20arr);
+  assert(
+    cmpArrays(reversed20arr, sorted20arr),
+    "Test worst case sorting with 20 elements array"
+  );
+
   console.log("BubbleSort tests passed");
 }
 

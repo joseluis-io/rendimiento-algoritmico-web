@@ -70,6 +70,15 @@ function testBubbleSort() {
     cmpArrays(sameNumbers, [3, 3, 3, 3]),
     "bubbleSort(bubbleSort(sameNumbers))",
   );
+
+  // TEST: worts case scenario with reversed 20 array
+  const sorted10array = new Int32Array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  const reversed10array = new Int32Array([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
+  bubbleSort(reversed10array, reversed10array.length);
+  assert(
+    cmpArrays(reversed10array, sorted10array),
+    "Test worst case sorting with 20 elements array"
+  );
   console.log("BubbleSort tests passed");
 }
 

@@ -1,4 +1,3 @@
-// quick_example.cpp
 #include <emscripten/bind.h>
 #include <queue>
 
@@ -80,7 +79,7 @@ bool Queue::isEmpty() { return this->items.empty(); }
 
 EMSCRIPTEN_BINDINGS(cola) {
   class_<Queue>("Queue")
-    .constructor()
+    .constructor<>()
     .function("push", &Queue::push)
     .function("pop", &Queue::pop)
     .function("peek", &Queue::peek)
