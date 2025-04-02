@@ -8,11 +8,12 @@ const dylib = Deno.dlopen(
     "linearSearch": { parameters: ["buffer", "usize", "isize"], result: "i32" },
     "binarySearch": { parameters: ["buffer", "usize", "isize"], result: "i32" },
     "bubbleSort": { parameters: ["buffer", "usize"], result: "void" },
-  } as const,
+  },
 );
 
 const { fib, linearSearch, binarySearch, bubbleSort } = dylib.symbols;
 import { Queue } from './queue.js';
+import { Environment, exportToCSV } from '../shared/util.js';
 
 function benchmark(algorithm, inputs) {
   const results = [];
@@ -79,7 +80,7 @@ function benchmarkBinarySearch(binarySearch) {
 
 function benchmarkBubbleSort(bubbleSort) {
   const results = [];
-  const sizes = [100, 1000, 5000, 10000, 100000];
+  const sizes = [100, 1000, 5000, 10000];
   sizes.forEach(size => {
       const reversedArray = generateInt32Array(size).reverse();
       console.log(reversedArray)
@@ -117,49 +118,22 @@ function benchmarkQueue() {
   return results;
 }
 
-// formato: YYYYMMDDTHHMM
-function getCurrentDateTime() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  return `${year}${month}${day}T${hours}${minutes}`;
-}
-
-async function exportToCSV(results, algorithmName, environment, debug=false) {
-  const dateTime = getCurrentDateTime();
-  const filename = `../../dataset/${algorithmName}_${environment}--${dateTime}.csv`;
-  const header = 'Algorithm,Input,Time\n';
-  const rows = results.map(result => `${result.algorithm},${result.input},${result.time}`).join('\n');
-  const csvContent = header + rows;
-
-  if(debug){
-    console.log(csvContent);
-    console.log(results);
-    return;
-  }
-
-  console.log(csvContent);
-  console.log(results);
-  Deno.writeTextFileSync(filename, csvContent);
-}
-
+const environment = new Environment();
+environment.setFFI("Rust");
 
 const inputs = Array.from({ length: 20 }, (_, i) => i);
 
-// const results = benchmark(fib, inputs);
-// exportToCSV(results, 'fibonacci', "deno-rust");
+const results = benchmark(fib, inputs);
+exportToCSV(results, 'fibonacci', environment);
 
-// const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
-// exportToCSV(resultsLinearSearch, 'linearSearch', "deno-rust");
+const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
+exportToCSV(resultsLinearSearch, 'linearSearch', environment);
 
-// const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
-// exportToCSV(resultsBinarySearch, 'binarySearch', "deno-rust");
+const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
+exportToCSV(resultsBinarySearch, 'binarySearch', environment);
 
 const resultsBubbleSort = benchmarkBubbleSort(bubbleSort);
-exportToCSV(resultsBubbleSort, 'bubbleSort', "deno-rust", true);
+exportToCSV(resultsBubbleSort, 'bubbleSort', environment);
 
-// const resultsQueue = benchmarkQueue();
-// exportToCSV(resultsQueue, "queue", "deno-rust");
+const resultsQueue = benchmarkQueue();
+exportToCSV(resultsQueue, "queue", environment);

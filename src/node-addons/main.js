@@ -1,5 +1,5 @@
 const { fibonacci, linearSearch, binarySearch, bubbleSort, Queue } = require("./lib/binding.js");
-const fs = require('fs');
+const { Environment, exportToCSV } = require('../shared/util.js');
 
 function benchmark(algorithm, inputs) {
     const results = [];
@@ -104,57 +104,22 @@ function benchmarkQueue() {
     return results;
 }
 
-// formato: YYYYMMDDTHHMM
-function getCurrentDateTime() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${year}${month}${day}T${hours}${minutes}`;
-}
-
-function exportToCSV(results, algorithmName, environment, debug=false) {
-    const dateTime = getCurrentDateTime();
-    const filename = `../../dataset/${algorithmName}_${environment}--${dateTime}.csv`;
-    const header = 'Algorithm,Input,Time\n';
-    const rows = results.map(result => `${algorithmName},${result.input},${result.time}`).join('\n');
-    const csvContent = header + rows;
-
-    console.log(results);
-    console.log(csvContent);
-
-    if (!debug) {
-        fs.writeFileSync(filename, csvContent);
-        console.log(`Resultados exportados al fichero: ${filename}`);
-    }
-
-}
+const environment = new Environment();
+environment.setFFI("C++");
 
 const inputs = Array.from({ length: 20 }, (_, i) => i);
 
-// const results = benchmark(fibonacci, inputs);
+const results = benchmark(fibonacci, inputs);
+exportToCSV(results, 'fibonacci', environment);
 
-// exportToCSV(results, 'fibonacci', "Node-CPP");
+const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
+exportToCSV(resultsLinearSearch, 'linearSearch', environment);
 
-// console.log(benchmark(fibonacci, inputs));
-// console.log(benchmarkLinearSearch(linearSearch));
-// console.log(benchmarkBinarySearch(binarySearch));
-// console.log(benchmarkBubbleSort(bubbleSort));
-// console.log(benchmarkQueue());
-
-// const results = benchmark(fibonacci, inputs);
-// exportToCSV(results, 'fibonacci', "node-cpp");
-
-// const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
-// exportToCSV(resultsLinearSearch, 'linearSearch', "node-cpp");
-
-// const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
-// exportToCSV(resultsBinarySearch, 'binarySearch', "node-cpp");
+const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
+exportToCSV(resultsBinarySearch, 'binarySearch', environment);
 
 const resultsBubbleSort = benchmarkBubbleSort(bubbleSort);
-exportToCSV(resultsBubbleSort, 'bubbleSort', "node-cpp", true);
+exportToCSV(resultsBubbleSort, 'bubbleSort', environment);
 
-// const resultsQueue = benchmarkQueue();
-// exportToCSV(resultsQueue, "queue", "node-cpp");
+const resultsQueue = benchmarkQueue();
+exportToCSV(resultsQueue, "queue", environment);
