@@ -100,16 +100,16 @@ function benchmarkQueue() {
 const inputs = Array.from({ length: 20 }, (_, i) => i);
 
 const resultsFibonacci = benchmark(fibonacci, inputs);
-exportToCSV(resultsFibonacci, 'fibonacci', environment);
+await exportToCSV(resultsFibonacci, 'fibonacci', environment);
 
 const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
-exportToCSV(resultsLinearSearch, 'linearSearch', environment);
+await exportToCSV(resultsLinearSearch, 'linearSearch', environment);
 
 const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
-exportToCSV(resultsBinarySearch, 'binarySearch', environment);
+await exportToCSV(resultsBinarySearch, 'binarySearch', environment);
 
 const resultsBubbleSort = benchmarkBubbleSort(bubbleSort);
-exportToCSV(resultsBubbleSort, 'bubbleSort', environment);
+await exportToCSV(resultsBubbleSort, 'bubbleSort', environment);
 
 const resultsQueue = benchmarkQueue();
-exportToCSV(resultsQueue, "queue", environment);
+await exportToCSV(resultsQueue, "queue", environment);

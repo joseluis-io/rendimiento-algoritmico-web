@@ -3,27 +3,28 @@ import { Environment, exportToCSV } from '../shared/util.js';
 const environment = new Environment();
 environment.setFFI("WASM");
 
-WebAssembly.instantiateStreaming(fetch("./algorithm.wasm")).then(
-    (res) => {
-        const { fib, linearSearch, binarySearch, bubbleSort, memory } =
-            res.instance.exports;
+const { fib, linearSearch, binarySearch, bubbleSort, memory } =
+    await environment.loadWasm('./algorithm.wasm');
 
-        const resultsFibonacci = benchmarkFibonacci(fib, 20);
-        exportToCSV(resultsFibonacci, "fibonacci", environment);
+// TODO: const { Module } = await environment.loadWasmFromJS('./queue.js')
 
-        const resultsLinearSearch = benchmarkLinearSearch(linearSearch, memory);
-        exportToCSV(resultsLinearSearch, "linearSearch", environment);
 
-        const resultsBinarySearch = benchmarkBinarySearch(binarySearch, memory);
-        exportToCSV(resultsBinarySearch, "binarySearch", environment);
+const resultsFibonacci = benchmarkFibonacci(fib, 20);
+await exportToCSV(resultsFibonacci, "fibonacci", environment);
 
-        const resultsBubbleSort = benchmarkBubbleSort(bubbleSort, memory);
-        exportToCSV(resultsBubbleSort, "bubbleSort", environment);
+const resultsLinearSearch = benchmarkLinearSearch(linearSearch, memory);
+await exportToCSV(resultsLinearSearch, "linearSearch", environment);
 
-        const resultsQueue = benchmarkQueue(memory);
-        exportToCSV(resultsQueue, "queue", environment);
-    },
-);
+const resultsBinarySearch = benchmarkBinarySearch(binarySearch, memory);
+await exportToCSV(resultsBinarySearch, "binarySearch", environment);
+
+const resultsBubbleSort = benchmarkBubbleSort(bubbleSort, memory);
+await exportToCSV(resultsBubbleSort, "bubbleSort", environment);
+
+if (environment.isBrowser()) {
+    const resultsQueue = benchmarkQueue(memory);
+    await exportToCSV(resultsQueue, "queue", environment);
+}
 
 function benchmarkFibonacci(fibonacci, inputs) {
     const results = [];
@@ -107,7 +108,6 @@ function benchmarkBubbleSort(bubbleSort, memory) {
 function benchmarkQueue(memory) {
     const results = [];
     const sizes = [100, 1000, 5000, 10000, 100000, 1000000];
-
     sizes.forEach(size => {
 
         const array = new Int32Array(memory.buffer, 0, size);

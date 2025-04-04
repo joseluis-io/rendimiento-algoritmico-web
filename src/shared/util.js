@@ -7,7 +7,7 @@ export class Environment {
         this.strategy = this.createStrategy();
     }
 
-    setFFI(type){
+    setFFI(type) {
         this.ffi = type;
     }
 
@@ -60,15 +60,31 @@ export class Environment {
 
         const strategies = {
             "Bun": {
-                handleFile: async (filename, content) => await Bun.write(filename, content)
+                handleFile: async (filename, content) => await Bun.write(filename, content),
+                loadWasm: async (pathOrUrl) => {
+                    const wasmBinary = await Bun.file(pathOrUrl).arrayBuffer();
+                    const res = await WebAssembly.instantiate(wasmBinary);
+                    return res.instance.exports;
+                }
             },
             "Deno": {
-                handleFile: async (filename, content) => await Deno.writeTextFile(filename, content)
+                handleFile: async (filename, content) => await Deno.writeTextFile(filename, content),
+                loadWasm: async (pathOrUrl) => {
+                    const wasmBinary = await Deno.readFile(pathOrUrl);
+                    const res = await WebAssembly.instantiate(wasmBinary);
+                    return res.instance.exports;
+                }
             },
             "Node": {
                 handleFile: async (filename, content) => {
                     const fs = await import('node:fs/promises');
                     await fs.writeFile(filename, content);
+                },
+                loadWasm: async (pathOrUrl) => {
+                    const fs = await import('node:fs/promises');
+                    const wasmBinary = await fs.readFile(pathOrUrl);
+                    const res = await WebAssembly.instantiate(wasmBinary);
+                    return res.instance.exports;
                 }
             },
             "Browser": {
@@ -80,6 +96,10 @@ export class Environment {
                     link.textContent = `Descargar ${filename}`;
                     link.style.display = "block";
                     document.body.appendChild(link);
+                },
+                loadWasm: async (pathOrUrl) => {
+                    const res = await WebAssembly.instantiateStreaming(fetch(pathOrUrl));
+                    return res.instance.exports;
                 }
             },
         }
@@ -92,7 +112,21 @@ export class Environment {
     }
 
     handleFile(filename, content) {
-        this.strategy.handleFile(filename, content);
+        try {
+            this.strategy.handleFile(filename, content);
+        } catch (error) {
+            console.error(`Error handling file ${filename}: ${error.message}`);
+            throw new Error(`Failed to handle file in ${this.env} environment: ${error.message}`);
+        }
+    }
+
+    loadWasm(pathOrUrl) {
+        try {
+            return this.strategy.loadWasm(pathOrUrl);
+        } catch (error) {
+            console.error(`Error loading WASM from ${pathOrUrl}: ${error.message}`);
+            throw new Error(`Failed to load WASM in ${this.env} environment: ${error.message}`);
+        }
     }
 }
 
@@ -107,19 +141,19 @@ function getCurrentDateTime() {
     return `${year}${month}${day}T${hours}${minutes}`;
 }
 
-export function exportToCSV(results, algorithmName, environment) {
+export async function exportToCSV(results, algorithmName, environment) {
     const dateTime = getCurrentDateTime();
     let filename = `../../dataset/${algorithmName}_${environment.env}_${environment.ffi}.${environment.version}--${dateTime}.csv`;
-    if(environment.isBrowser()){
+    if (environment.isBrowser()) {
         filename = `${algorithmName}_${environment.env}_${environment.ffi}.${environment.version}--${dateTime}.csv`
     }
-    
+
     const header = 'Algorithm,Input,Time\n';
     const rows = results.map(result => `${result.algorithm},${result.input},${result.time}`).join('\n');
     const csvContent = header + rows;
 
     console.log(csvContent)
     console.table(results)
-    environment.handleFile(filename, csvContent);
+    await environment.handleFile(filename, csvContent);
     console.log(filename)
 }
