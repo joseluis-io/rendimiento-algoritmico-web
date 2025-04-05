@@ -61,7 +61,7 @@ export class Environment {
         const strategies = {
             "Bun": {
                 handleFile: async (filename, content) => await Bun.write(filename, content),
-                loadWasm: async (pathOrUrl) => {
+                getWasmInstanceExports: async (pathOrUrl) => {
                     const wasmBinary = await Bun.file(pathOrUrl).arrayBuffer();
                     const res = await WebAssembly.instantiate(wasmBinary);
                     return res.instance.exports;
@@ -69,7 +69,7 @@ export class Environment {
             },
             "Deno": {
                 handleFile: async (filename, content) => await Deno.writeTextFile(filename, content),
-                loadWasm: async (pathOrUrl) => {
+                getWasmInstanceExports: async (pathOrUrl) => {
                     const wasmBinary = await Deno.readFile(pathOrUrl);
                     const res = await WebAssembly.instantiate(wasmBinary);
                     return res.instance.exports;
@@ -80,7 +80,7 @@ export class Environment {
                     const fs = await import('node:fs/promises');
                     await fs.writeFile(filename, content);
                 },
-                loadWasm: async (pathOrUrl) => {
+                getWasmInstanceExports: async (pathOrUrl) => {
                     const fs = await import('node:fs/promises');
                     const wasmBinary = await fs.readFile(pathOrUrl);
                     const res = await WebAssembly.instantiate(wasmBinary);
@@ -97,10 +97,10 @@ export class Environment {
                     link.style.display = "block";
                     document.body.appendChild(link);
                 },
-                loadWasm: async (pathOrUrl) => {
+                getWasmInstanceExports: async (pathOrUrl) => {
                     const res = await WebAssembly.instantiateStreaming(fetch(pathOrUrl));
                     return res.instance.exports;
-                }
+                },
             },
         }
 
@@ -120,9 +120,9 @@ export class Environment {
         }
     }
 
-    loadWasm(pathOrUrl) {
+    getWasmInstanceExports(pathOrUrl) {
         try {
-            return this.strategy.loadWasm(pathOrUrl);
+            return this.strategy.getWasmInstanceExports(pathOrUrl);
         } catch (error) {
             console.error(`Error loading WASM from ${pathOrUrl}: ${error.message}`);
             throw new Error(`Failed to load WASM in ${this.env} environment: ${error.message}`);

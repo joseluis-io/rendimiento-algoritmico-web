@@ -8,8 +8,8 @@ binario WebAssembly y servidor HTTP en el directorio ~src~:
 
 #+begin_src shell
   emcc -O3 -o algorithm.js algorithm.cpp -s WASM=1 -s EXPORTED_FUNCTIONS="['_fib', '_linearSearch', '_binarySearch', '_bubbleSort']" -s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap']"
-  emcc -lembind -O2 -o queue.js queue.cpp
-  cd ../ && live-server
+  emcc -O3 queue.cpp -o nuevo.js -s MODULARIZE=1 -s EXPORT_ES6=1 -s ENVIRONMENT='web,worker,node' --bind
+  live-server ..
 #+end_src
 
 La ejecución del código y test unitarios se encuentra en el fichero

@@ -4,10 +4,7 @@ const environment = new Environment();
 environment.setFFI("WASM");
 
 const { fib, linearSearch, binarySearch, bubbleSort, memory } =
-    await environment.loadWasm('./algorithm.wasm');
-
-// TODO: const { Module } = await environment.loadWasmFromJS('./queue.js')
-
+    await environment.getWasmInstanceExports('./algorithm.wasm');
 
 const resultsFibonacci = benchmarkFibonacci(fib, 20);
 await exportToCSV(resultsFibonacci, "fibonacci", environment);
@@ -21,9 +18,13 @@ await exportToCSV(resultsBinarySearch, "binarySearch", environment);
 const resultsBubbleSort = benchmarkBubbleSort(bubbleSort, memory);
 await exportToCSV(resultsBubbleSort, "bubbleSort", environment);
 
-if (environment.isBrowser()) {
-    const resultsQueue = benchmarkQueue(memory);
+try {
+    const emscriptenModule = await import('./queue.js');
+    const Module = await emscriptenModule.default();
+    const resultsQueue = benchmarkQueue(Module, memory);
     await exportToCSV(resultsQueue, "queue", environment);
+} catch (e) {
+    console.error(`Queue benchmark in ${environment.env}/${environment.ffi} not supported: ${e.message}`)
 }
 
 function benchmarkFibonacci(fibonacci, inputs) {
@@ -105,7 +106,7 @@ function benchmarkBubbleSort(bubbleSort, memory) {
     return results;
 }
 
-function benchmarkQueue(memory) {
+function benchmarkQueue(module, memory) {
     const results = [];
     const sizes = [100, 1000, 5000, 10000, 100000, 1000000];
     sizes.forEach(size => {
@@ -114,7 +115,7 @@ function benchmarkQueue(memory) {
         array.forEach((val, i, arr) => arr[i] = i);
 
         const start = performance.now();
-        const queue = new Module.Queue();
+        const queue = new module.Queue();
         array.forEach(val => queue.push(val));
         while (!queue.isEmpty()) {
             queue.pop();
