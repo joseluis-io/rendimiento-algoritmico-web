@@ -82,13 +82,13 @@ int* generateUnorderedArray(int size)
     int* array = new int[size];
     for (int i = 0; i < size; ++i)
     {
-        array[i] = i + 1;
+        array[i] = size - i;
     }
 
     // Baraja el array usando un generador de números aleatorio
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(array, array + size, g);
+    // std::random_device rd;
+    // std::mt19937 g(rd());
+    // std::shuffle(array, array + size, g);
 
     return array;
 }
@@ -96,7 +96,7 @@ int* generateUnorderedArray(int size)
 std::vector<std::pair<int, double>> benchmarkBubbleSort()
 {
     std::vector<std::pair<int, double>> results;
-    std::vector<int> sizes = {100, 1000, 5000, 10000, 100000};
+    std::vector<int> sizes = {10000, 25000, 50000, 75000, 100000, 125000, 150000};
 
     for (int size : sizes)
     {
@@ -209,25 +209,25 @@ int main()
         inputs.push_back(i);
     }
 
-    auto resultsFibonacci = benchmark(fib, inputs);
+    // auto resultsFibonacci = benchmark(fib, inputs);
     // exportToCSV(resultsFibonacci, "fibonacci");
 
-    std::vector<int> sizes = {100, 1000, 5000, 10000, 100000, 1000000, 10000000};
-    std::vector<std::pair<int, double>> resultsLinear = benchmarkLinearSearch(sizes);
+    // std::vector<int> sizes = {100, 1000, 5000, 10000, 100000, 1000000, 10000000};
+    // std::vector<std::pair<int, double>> resultsLinear = benchmarkLinearSearch(sizes);
 
-    std::cout << "Algorithm,Input Size,Time (ms)" << std::endl;
-    for (const auto &result : resultsLinear)
-    {
-        std::cout << "Linear Search," << result.first << "," << result.second << std::endl;
-    }
+    // std::cout << "Algorithm,Input Size,Time (ms)" << std::endl;
+    // for (const auto &result : resultsLinear)
+    // {
+    //     std::cout << "Linear Search," << result.first << "," << result.second << std::endl;
+    // }
 
-    std::vector<std::pair<int, double>> resultsBinary = benchmarkBinarySearch(sizes);
+    // std::vector<std::pair<int, double>> resultsBinary = benchmarkBinarySearch(sizes);
 
-    std::cout << "Algorithm,Input Size,Time (ms)" << std::endl;
-    for (const auto &result : resultsBinary)
-    {
-        std::cout << "Binary Search," << result.first << "," << result.second << std::endl;
-    }
+    // std::cout << "Algorithm,Input Size,Time (ms)" << std::endl;
+    // for (const auto &result : resultsBinary)
+    // {
+    //     std::cout << "Binary Search," << result.first << "," << result.second << std::endl;
+    // }
 
     
     std::vector<std::pair<int, double>> resultsBubbleSort = benchmarkBubbleSort();
@@ -237,8 +237,8 @@ int main()
     }
 
 
-    std::vector<BenchmarkResult> resultsQueue = benchmarkQueue();
-    printResults(resultsQueue);
+    // std::vector<BenchmarkResult> resultsQueue = benchmarkQueue();
+    // printResults(resultsQueue);
 
     return 0;
 }

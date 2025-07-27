@@ -4,9 +4,15 @@ La implementación de los algoritmos se encuentra en el fichero
 listas para su uso en ~main.ts~. Para la generación del binario y la
 ejecución, introducir los siguientes comandos:
 
+Dependencias: rust
+
 #+begin_src shell
   rustc --crate-type cdylib algorithm.rs
   rustc --crate-type cdylib queue.rs
-  deno run --allow-write --allow-ffi --unstable main.js # Ejecución
-  deno run --allow-ffi --unstable tests.ts # Ejecución test unitarios
+  deno run --allow-read --allow-write --allow-ffi main.js # Ejecución
+  deno run --allow-ffi tests.ts # Ejecución test unitarios
+
+  rustc --crate-type=cdylib algorithm.rs -C opt-level=3 -C lto -C codegen-units=1 -C target-cpu=native -C prefer-dynamic=no
+  rustc --crate-type=cdylib queue.rs -C opt-level=3 -C lto -C codegen-units=1 -C target-cpu=native -C prefer-dynamic=no
+
 #+end_src

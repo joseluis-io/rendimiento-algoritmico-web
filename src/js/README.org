@@ -9,6 +9,8 @@ NodeJS:
   node testAlgorithms.js # Tests unitarios
   node benchmark.js # Benchmark NodeJS
   deno benchmark.js --allow-write # Benchmark Deno
+  bun benchmark.js
+  http-server . # Benchmark navegador
 #+end_src
 
 Para la ejecución del benchamrk en el navegador se necesita un servidor http que sirva el directorio.

@@ -4,10 +4,15 @@ La implementación de los algoritmos se encuentra en
 ~test/test_binding.js~. Para la generación del proyecto y ejecución
 del proyecto:
 
+Dependencias:
+npm install -g node-gyp
+clang
+
 #+begin_src shell
   npm install # Dependencias
   node-gyp configure
-  node-gyp build
+  node-gyp build --release
   npm run test # Ejecuta los tests unitarios
   npm run main
+  npm run main -- --alg=fib
 #+end_src

@@ -14,7 +14,15 @@
       },
       'msvs_settings': {
         'VCCLCompilerTool': { 'ExceptionHandling': 1 },
-      }
+      },
+      "conditions": [
+        ["OS=='linux'", {
+          "cflags": [ "-O3", "-march=native", "-fno-exceptions" ],
+          "xcode_settings": {
+            "GCC_OPTIMIZATION_LEVEL": "3"
+          }
+        }]
+      ]
     }
   ]
 }

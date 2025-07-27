@@ -1,8 +1,10 @@
 const { fibonacci, linearSearch, binarySearch, bubbleSort, Queue } = require("./lib/binding.js");
 const { Environment, exportToCSV } = require('../shared/util.js');
+const { BENCHMARK_INPUTS } = require("../shared/inputs.js");
 
-function benchmark(algorithm, inputs) {
+function benchmark(algorithm) {
     const results = [];
+    const inputs = Array.from({ length: BENCHMARK_INPUTS.fib + 1 }, (_, i) => i);
     for (const input of inputs) {
         const start = performance.now();
         const result = algorithm(input);
@@ -26,7 +28,7 @@ function generateInt32Array(size) {
 }
 
 function benchmarkLinearSearch(linearSearch) {
-    const sizes = [100, 1000, 5000, 10000, 100000, 1000000, 10000000];
+    const sizes = BENCHMARK_INPUTS.linear;
     const results = [];
     sizes.forEach(size => {
         const array = generateInt32Array(size);
@@ -37,7 +39,7 @@ function benchmarkLinearSearch(linearSearch) {
         const duration = end - start;
         results.push({
             algorithm: "linearSearch",
-            input: `LinearSearch(Array[${size}])`,
+            input: size,
             result: result,
             time: duration
         });
@@ -47,7 +49,7 @@ function benchmarkLinearSearch(linearSearch) {
 
 function benchmarkBinarySearch(binarySearch) {
     const results = [];
-    const sizes = [100, 1000, 5000, 10000, 100000, 1000000, 10000000];
+    const sizes = BENCHMARK_INPUTS.binary;
     sizes.forEach(size => {
         const array = generateInt32Array(size);
         const searchValue = size;
@@ -57,7 +59,7 @@ function benchmarkBinarySearch(binarySearch) {
         const duration = end - start;
         results.push({
             algorithm: "binarySearch",
-            input: `binarySearch(Array[${size}])`,
+            input: size,
             result: result,
             time: duration
         });
@@ -67,7 +69,7 @@ function benchmarkBinarySearch(binarySearch) {
 
 function benchmarkBubbleSort(bubbleSort) {
     const results = [];
-    const sizes = [100, 1000, 5000, 10000, 100000];
+    const sizes = BENCHMARK_INPUTS.bubble;
     sizes.forEach(size => {
         const reversedArray = generateInt32Array(size).reverse();
         const start = performance.now();
@@ -76,7 +78,7 @@ function benchmarkBubbleSort(bubbleSort) {
         const duration = end - start;
         results.push({
             algorithm: "bubbleSort",
-            input: `bubbleSort(Array[${size}])`,
+            input: size,
             result: reversedArray,
             time: duration
         });
@@ -86,18 +88,21 @@ function benchmarkBubbleSort(bubbleSort) {
 
 function benchmarkQueue() {
     const queue = new Queue();
-    const sizes = [100, 1000, 5000, 10000, 100000, 1000000, 10000000];
+    const sizes = BENCHMARK_INPUTS.queue;
     const results = [];
     sizes.forEach(size => {
         const start = performance.now();
         for (let i = 0; i < size; i++) {
             queue.push(i);
         }
+        while (!queue.isEmpty()) {
+            queue.pop();
+        }
         const end = performance.now();
         const duration = end - start;
         results.push({
-            algorithm: "Queue.push",
-            input: `size[${size}]`,
+            algorithm: "Queue",
+            input: size,
             time: duration
         });
     });
@@ -107,19 +112,30 @@ function benchmarkQueue() {
 const environment = new Environment();
 environment.setFFI("C++");
 
-const inputs = Array.from({ length: 20 }, (_, i) => i);
+const alg = environment.getAlgorithmArg();
+console.log(alg);
 
-const results = benchmark(fibonacci, inputs);
-exportToCSV(results, 'fibonacci', environment);
+if (alg === "fib" || alg === "all") {
+    const results = benchmark(fibonacci);
+    exportToCSV(results, 'fibonacci', environment);
+}
 
-const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
-exportToCSV(resultsLinearSearch, 'linearSearch', environment);
+if (alg === "lineal" || alg === "all") {
+    const resultsLinearSearch = benchmarkLinearSearch(linearSearch);
+    exportToCSV(resultsLinearSearch, 'linearSearch', environment);
+}
 
-const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
-exportToCSV(resultsBinarySearch, 'binarySearch', environment);
+if (alg === "binary" || alg === "all") {
+    const resultsBinarySearch = benchmarkBinarySearch(binarySearch);
+    exportToCSV(resultsBinarySearch, 'binarySearch', environment);
+}
 
-const resultsBubbleSort = benchmarkBubbleSort(bubbleSort);
-exportToCSV(resultsBubbleSort, 'bubbleSort', environment);
+if (alg === "bubble" || alg === "all") {
+    const resultsBubbleSort = benchmarkBubbleSort(bubbleSort);
+    exportToCSV(resultsBubbleSort, 'bubbleSort', environment);
+}
 
-const resultsQueue = benchmarkQueue();
-exportToCSV(resultsQueue, "queue", environment);
+if (alg === "queue" || alg === "all") {
+    const resultsQueue = benchmarkQueue();
+    exportToCSV(resultsQueue, "queue", environment);
+}

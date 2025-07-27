@@ -23,6 +23,8 @@ CFLAGS_Debug := \
 	-Wextra \
 	-Wno-unused-parameter \
 	-fPIC \
+	-O3 \
+	-march=native \
 	-m64 \
 	-g \
 	-O0
@@ -33,16 +35,17 @@ CFLAGS_C_Debug :=
 # Flags passed to only C++ files.
 CFLAGS_CC_Debug := \
 	-fno-rtti \
+	-fno-strict-aliasing \
 	-std=gnu++17
 
 INCS_Debug := \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/include/node \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/src \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/openssl/config \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/openssl/openssl/include \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/uv/include \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/zlib \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/v8/include \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/include/node \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/src \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/openssl/config \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/openssl/openssl/include \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/uv/include \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/zlib \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/v8/include \
 	-I/home/joseluis/Documents/rendimiento-algoritmico-web/src/node-addons/node_modules/node-addon-api
 
 DEFS_Release := \
@@ -64,6 +67,8 @@ CFLAGS_Release := \
 	-Wextra \
 	-Wno-unused-parameter \
 	-fPIC \
+	-O3 \
+	-march=native \
 	-m64 \
 	-O3 \
 	 -flto=4 -fuse-linker-plugin -ffat-lto-objects  \
@@ -75,16 +80,17 @@ CFLAGS_C_Release :=
 # Flags passed to only C++ files.
 CFLAGS_CC_Release := \
 	-fno-rtti \
+	-fno-strict-aliasing \
 	-std=gnu++17
 
 INCS_Release := \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/include/node \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/src \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/openssl/config \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/openssl/openssl/include \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/uv/include \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/zlib \
-	-I/home/joseluis/.cache/node-gyp/20.12.2/deps/v8/include \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/include/node \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/src \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/openssl/config \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/openssl/openssl/include \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/uv/include \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/zlib \
+	-I/home/joseluis/.cache/node-gyp/22.16.0/deps/v8/include \
 	-I/home/joseluis/Documents/rendimiento-algoritmico-web/src/node-addons/node_modules/node-addon-api
 
 OBJS := \

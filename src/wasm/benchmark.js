@@ -1,3 +1,4 @@
+import { BENCHMARK_INPUTS } from '../shared/inputs.js';
 import { Environment, exportToCSV } from '../shared/util.js';
 
 const environment = new Environment();
@@ -6,32 +7,46 @@ environment.setFFI("WASM");
 const { fib, linearSearch, binarySearch, bubbleSort, memory } =
     await environment.getWasmInstanceExports('./algorithm.wasm');
 
-const resultsFibonacci = benchmarkFibonacci(fib, 20);
-await exportToCSV(resultsFibonacci, "fibonacci", environment);
+const alg = environment.getAlgorithmArg();
+console.log(alg);
 
-const resultsLinearSearch = benchmarkLinearSearch(linearSearch, memory);
-await exportToCSV(resultsLinearSearch, "linearSearch", environment);
-
-const resultsBinarySearch = benchmarkBinarySearch(binarySearch, memory);
-await exportToCSV(resultsBinarySearch, "binarySearch", environment);
-
-const resultsBubbleSort = benchmarkBubbleSort(bubbleSort, memory);
-await exportToCSV(resultsBubbleSort, "bubbleSort", environment);
-
-try {
-    const emscriptenModule = await import('./queue.js');
-    const Module = await emscriptenModule.default();
-    const resultsQueue = benchmarkQueue(Module, memory);
-    await exportToCSV(resultsQueue, "queue", environment);
-} catch (e) {
-    console.error(`Queue benchmark in ${environment.env}/${environment.ffi} not supported: ${e.message}`)
+if (alg === "fib" || alg === "all") {
+    const resultsFibonacci = benchmarkFibonacci(fib);
+    await exportToCSV(resultsFibonacci, "fibonacci", environment);
 }
 
-function benchmarkFibonacci(fibonacci, inputs) {
+if (alg === "lineal" || alg === "all") {
+    const resultsLinearSearch = benchmarkLinearSearch(linearSearch, memory);
+    await exportToCSV(resultsLinearSearch, "linearSearch", environment);
+}
+
+if (alg === "binary" || alg === "all") {
+    const resultsBinarySearch = benchmarkBinarySearch(binarySearch, memory);
+    await exportToCSV(resultsBinarySearch, "binarySearch", environment);
+}
+
+if (alg === "bubble" || alg === "all") {
+    const resultsBubbleSort = benchmarkBubbleSort(bubbleSort, memory);
+    await exportToCSV(resultsBubbleSort, "bubbleSort", environment);
+}
+
+if (alg === "queue" || alg === "all") {
+    try {
+        const emscriptenModule = await import('./queue.js');
+        const Module = await emscriptenModule.default();
+        const resultsQueue = benchmarkQueue(Module, memory);
+        await exportToCSV(resultsQueue, "queue", environment);
+    } catch (e) {
+        console.error(`Queue benchmark in ${environment.env}/${environment.ffi} not supported: ${e.message}`)
+    }
+}
+
+function benchmarkFibonacci(fibonacci) {
     const results = [];
+    const inputs = BENCHMARK_INPUTS.fib;
     for (let i = 0; i <= inputs; i++) {
         const start = performance.now();
-        const result = fibonacci(i);
+        const result = fibonacci(BigInt(i));
         const end = performance.now();
         results.push({
             algorithm: "fibonacci",
@@ -44,19 +59,19 @@ function benchmarkFibonacci(fibonacci, inputs) {
 }
 
 function benchmarkLinearSearch(linearSearch, memory) {
-    const sizes = [100, 1000, 5000, 10000, 100000, 1000000];
+    const sizes = BENCHMARK_INPUTS.linear;
     const results = [];
     sizes.forEach(size => {
         const array = new Int32Array(memory.buffer, 0, size);
         array.forEach((val, i, arr) => arr[i] = i);
         const searchValue = size - 1;
         const start = performance.now();
-        const result = linearSearch(array, array.length, searchValue);
+        const result = linearSearch(0, array.length, searchValue);
         const end = performance.now();
         const duration = end - start;
         results.push({
             algorithm: "linearSearch",
-            input: `LinearSearch(Array[${size}])`,
+            input: size,
             result: result,
             time: duration
         });
@@ -65,19 +80,19 @@ function benchmarkLinearSearch(linearSearch, memory) {
 }
 
 function benchmarkBinarySearch(binarySearch, memory) {
-    const sizes = [100, 1000, 5000, 10000, 100000, 1000000];
+    const sizes = BENCHMARK_INPUTS.binary;
     const results = [];
     sizes.forEach(size => {
         const array = new Int32Array(memory.buffer, 0, size);
         array.forEach((val, i, arr) => arr[i] = i);
         const searchValue = size - 1;
         const start = performance.now();
-        const result = binarySearch(array, array.length, searchValue);
+        const result = binarySearch(0, array.length, searchValue);
         const end = performance.now();
         const duration = end - start;
         results.push({
             algorithm: "binarySearch",
-            input: `binarySearch(Array[${size}])`,
+            input: size,
             result: result,
             time: duration
         });
@@ -87,7 +102,7 @@ function benchmarkBinarySearch(binarySearch, memory) {
 
 function benchmarkBubbleSort(bubbleSort, memory) {
     const results = [];
-    const sizes = [100, 1000, 5000, 10000, 100000];
+    const sizes = BENCHMARK_INPUTS.bubble;
     sizes.forEach(size => {
         const reversedArray = new Int32Array(memory.buffer, 0, size);
         reversedArray.forEach((val, i, arr) => arr[i] = i);
@@ -98,7 +113,7 @@ function benchmarkBubbleSort(bubbleSort, memory) {
         const duration = end - start;
         results.push({
             algorithm: "bubbleSort",
-            input: `bubbleSort(Array[${size}])`,
+            input: size,
             result: reversedArray,
             time: duration
         });
@@ -108,7 +123,7 @@ function benchmarkBubbleSort(bubbleSort, memory) {
 
 function benchmarkQueue(module, memory) {
     const results = [];
-    const sizes = [100, 1000, 5000, 10000, 100000, 1000000];
+    const sizes = BENCHMARK_INPUTS.queue;
     sizes.forEach(size => {
 
         const array = new Int32Array(memory.buffer, 0, size);
@@ -125,7 +140,7 @@ function benchmarkQueue(module, memory) {
         const duration = end - start;
         results.push({
             algorithm: "Queue",
-            input: `Queue.push/pop(Array[${size}])`,
+            input: size,
             result: queue,
             time: duration
         });
