@@ -7,7 +7,7 @@ servidor HTTP. Compilación del código C++ para la generación de código
 binario WebAssembly y servidor HTTP en el directorio ~src~:
 
 #+begin_src shell
-  emcc -O2 -o algorithm.js algorithm.cpp -s WASM=1 -s EXPORTED_FUNCTIONS="['_fib', '_linearSearch', '_binarySearch', '_bubbleSort']" -s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap']"
+  emcc -O2 -o algorithm.js algorithm.cpp -s STANDALONE_WASM=1 -Wl,--no-entry -s WASM=1 -s INITIAL_MEMORY=4294967296 -s EXPORTED_FUNCTIONS="['_fib', '_linearSearch', '_binarySearch', '_bubbleSort']"
   emcc -O2 queue.cpp -o queue.js -s MODULARIZE=1 -s EXPORT_ES6=1 -s ENVIRONMENT='web,worker,node' --bind
   live-server ..
 #+end_src
@@ -15,8 +15,3 @@ binario WebAssembly y servidor HTTP en el directorio ~src~:
 La ejecución del código y test unitarios se encuentra en el fichero
 ~src/index.html~.
 
-emcc -O2 -o algorithm.js algorithm.cpp -s STANDALONE_WASM=1 -Wl,--no-entry -s WASM=1 -s INITIAL_MEMORY=2147483648 -s MAXIMUM_MEMORY=2147483648 -s ALLOW_MEMORY_GROWTH=0 -s EXPORTED_FUNCTIONS="['_fib', '_linearSearch', '_binarySearch', '_bubbleSort']" -s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap']"
-
-emcc -O2 -o algorithm.js algorithm.cpp -s STANDALONE_WASM=1 -Wl,--no-entry -s WASM=1 -s INITIAL_MEMORY=4294967296 -s EXPORTED_FUNCTIONS="['_fib', '_linearSearch', '_binarySearch', '_bubbleSort']" -s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap']"
-
-emcc -O2 -o algorithm.js algorithm.cpp -s STANDALONE_WASM=1 -Wl,--no-entry -s WASM=1 -s INITIAL_MEMORY=4294967296 -s EXPORTED_FUNCTIONS="['_fib', '_linearSearch', '_binarySearch', '_bubbleSort']"

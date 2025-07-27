@@ -9,10 +9,12 @@ Dependencias: rust
 #+begin_src shell
   rustc --crate-type cdylib algorithm.rs
   rustc --crate-type cdylib queue.rs
-  deno run --allow-read --allow-write --allow-ffi main.js # Ejecución
-  deno run --allow-ffi tests.ts # Ejecución test unitarios
+  
 
   rustc --crate-type=cdylib algorithm.rs -C opt-level=3 -C lto -C codegen-units=1 -C target-cpu=native -C prefer-dynamic=no
   rustc --crate-type=cdylib queue.rs -C opt-level=3 -C lto -C codegen-units=1 -C target-cpu=native -C prefer-dynamic=no
 
+
+  deno run --allow-read --allow-write --allow-ffi main.js # Ejecución
+  deno run --allow-ffi tests.ts # Ejecución test unitarios
 #+end_src
